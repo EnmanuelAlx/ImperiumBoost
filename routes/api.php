@@ -26,3 +26,5 @@ Route::get('getPrecioBajaPrioridad', 'ServicioController@getPrecioBajaPrioridad'
 Route::get('getPrecioPosicionamiento', 'ServicioController@getPrecioPosicionamiento');
 Route::get('getCuentas', 'ServicioController@getCuentas');
 
+
+
