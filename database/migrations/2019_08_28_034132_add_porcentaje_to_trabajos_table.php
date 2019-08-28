@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMetodoPagoToTrabajosTable extends Migration
+class AddPorcentajeToTrabajosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddMetodoPagoToTrabajosTable extends Migration
     public function up()
     {
         Schema::table('trabajos', function (Blueprint $table) {
-            $table->bigInteger('metodo_id');
+            $table->float('porcentaje_trabajador')->nullable()->default(50);
         });
     }
 
@@ -26,7 +26,7 @@ class AddMetodoPagoToTrabajosTable extends Migration
     public function down()
     {
         Schema::table('trabajos', function (Blueprint $table) {
-            $table->dropColumn('metodo_id');
+            $table->dropColumn('porcentaje_trabajador');
         });
     }
 }

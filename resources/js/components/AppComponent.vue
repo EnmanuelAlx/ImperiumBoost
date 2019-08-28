@@ -15,7 +15,7 @@
             prepend-icon="view_column"
             value="false"
             :color="`${this.$colors.primary}`"
-            
+            v-if="role_id == 2"
             >
                 <template v-slot:activator>
                     <v-list-item-content>
@@ -50,17 +50,22 @@
             <v-avatar
               size="40"
             >
-                <v-img :src="avatar" alt="alt"/>
+                <v-img :src="$store.state.imagen" alt="alt"/>
             </v-avatar>
           </v-btn>
         </template>
 
         <v-list>
-          <v-list-item>
-            <v-list-item-title>Modificar Usuario</v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title @click="logout">Cerrar sesion</v-list-item-title>
+          <route :to="{name: 'modificar'}" name="Modificar Usuario" icon="visibility"/>
+          <v-list-item :link="true" @click="logout">
+              <v-list-item-action>
+                  <v-icon>power_settings_new</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                  <v-list-item-title>
+                      Cerrar sesion
+                  </v-list-item-title>
+              </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -100,6 +105,10 @@ import route from './Route.vue'
     props: {
       email: String,
       avatar: String,
+      role_id: {
+        type: Number,
+        default: 2
+      }
     },
     data: () => ({
       drawer: null,
@@ -107,6 +116,10 @@ import route from './Route.vue'
     }),
     created () {
       this.$vuetify.theme.dark = true
+      this.$store.state.email = this.email;
+      this.$store.state.imagen = this.avatar;
+      this.$store.state.role_id = this.role_id;
+
       this.versionLol()
     },
     methods: {

@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-app>
       <v-container
         fluid
         fill-height
@@ -56,7 +56,7 @@
       <v-overlay :value="overlay">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
-    </v-content>
+    </v-app>
 </template>
 
 <script>

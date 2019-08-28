@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMetodoPagoToTrabajosTable extends Migration
+class AddFechaAsignacionTrabajadorToTrabajosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddMetodoPagoToTrabajosTable extends Migration
     public function up()
     {
         Schema::table('trabajos', function (Blueprint $table) {
-            $table->bigInteger('metodo_id');
+            $table->date('fecha_asignacion_trabajador')->nullable();
+            $table->date('fecha_culminacion_trabajo')->nullable();
         });
     }
 
@@ -26,7 +27,8 @@ class AddMetodoPagoToTrabajosTable extends Migration
     public function down()
     {
         Schema::table('trabajos', function (Blueprint $table) {
-            $table->dropColumn('metodo_id');
+            $table->dropColumn('fecha_asignacion_trabajador');
+            $table->dropColumn('fecha_culminacion_trabajo');
         });
     }
 }

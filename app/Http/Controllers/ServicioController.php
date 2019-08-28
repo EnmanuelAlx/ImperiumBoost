@@ -95,7 +95,6 @@ class ServicioController extends Controller
     
     public function getMaestrias(){
         $productos = Producto::where('servicio_id', 2)->orderBy('id', 'asc')->get();
-        // dd($productos);
         return response()->json($productos, 200);
     }
     
@@ -176,7 +175,7 @@ class ServicioController extends Controller
             $tipo_boost = $info['service']['tipo_servicio'];
             $desde = $data['desde'];
             $hasta = $data['hasta'];
-            $campeones = $data['campeones_selected'];
+            $campeones = implode(", ", $data['campeones_selected']);
             $nombre = $info['name'];
             $server = $info['server'];
             $metodo_pago = $info['payment_method'];
@@ -190,8 +189,6 @@ EOT;
                 $nota.= "Campeones seleccionados: $campeones
                 ";
             }
-            $nota.= 'Nota del cliente: '.$info['nota'];
-
             $trabajo = Trabajo::create([
                 'nota' => $nota,
                 'cuenta' => $info['name'],
@@ -202,6 +199,7 @@ EOT;
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
             ]);
             
             foreach ($data['ligas'] as $producto) {
@@ -240,7 +238,6 @@ Desde: $desde
 Hasta: $hasta
 
 EOT;
-            $nota.= 'Nota del cliente: '.$info['nota'];
 
             $trabajo = Trabajo::create([
                 'nota' => $nota,
@@ -252,6 +249,8 @@ EOT;
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
+
             ]);
             
             foreach ($data['productos'] as $producto) {
@@ -288,8 +287,6 @@ Desde: $desde
 Hasta: $hasta
 
 EOT;
-            $nota.= 'Nota del cliente: '.$info['nota'];
-
             $trabajo = Trabajo::create([
                 'nota' => $nota,
                 'cuenta' => $nombre,
@@ -300,6 +297,7 @@ EOT;
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
             ]);
             
             foreach ($data['productos'] as $producto) {
@@ -335,8 +333,6 @@ Desde: $desde
 Hasta: $hasta
 
 EOT;
-            $nota.= 'Nota del cliente: '.$info['nota'];
-
             $trabajo = Trabajo::create([
                 'nota' => $nota,
                 'cuenta' => $nombre,
@@ -347,6 +343,8 @@ EOT;
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
+
             ]);
             
             foreach ($data['productos'] as $producto) {
@@ -381,7 +379,6 @@ Tipo de servicio: $tipo_servicio
 Cantidad de partidas: $hasta
 
 EOT;
-            $nota.= 'Nota del cliente: '.$info['nota'];
 
             $trabajo = Trabajo::create([
                 'nota' => $nota,
@@ -393,6 +390,8 @@ EOT;
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
+
             ]);
             
             foreach ($data['productos'] as $producto) {
@@ -425,8 +424,6 @@ Cantidad de partidas: $hasta
 
 EOT;
             
-            $nota.= 'Nota del cliente: '.$info['nota'];
-
             $trabajo = Trabajo::create([
                 'nota' => $nota,
                 'cuenta' => $nombre,
@@ -437,6 +434,7 @@ EOT;
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
             ]);
             
             foreach ($data['productos'] as $producto) {
@@ -448,5 +446,42 @@ EOT;
         }
     }
 
+
+    public function getServicios(){
+        if(Auth::user()->role_id == 2){
+            $trabajos = Trabajo::where('user_id', Auth::user()->id)->where('status', '!=', -1)->get();
+            for ($i=0; $i < $trabajos->count() ; $i++) {
+                $productos = $trabajos[$i]->productos;
+                $adicionales = $trabajos[$i]->adicionales;
+                $primer_producto = $productos->first();
+                $ultimo_producto = $productos->last();
+                $trabajos[$i]['date_format_1'] = date_format($trabajos[$i]['created_at'], 'd-m-Y');            
+                $trabajos[$i]['date_format_2'] = date_format($trabajos[$i]['updated_at'], 'd-m-Y');            
+                $trabajos[$i]['imagen_primer_producto'] = ($primer_producto->imagen);
+                $trabajos[$i]['imagen_ultimo_producto'] = ($ultimo_producto->imagen);
+                $trabajos[$i]['nota_pro'] = strstr($trabajos[$i]['nota'], 'Nombre', true);
+                $trabajos[$i]['servicio'] = $trabajos[$i]->servicio;
+                $trabajos[$i]['trabajador'] = $trabajos[$i]->trabajador;
+            }
+            return response()->json($trabajos, 200);
+        }else if(Auth::user()->role_id == 3){
+            $trabajos = Trabajo::where('trabajador_id', Auth::user()->id)->where('status', '!=', -1)->get();
+            for ($i=0; $i < $trabajos->count() ; $i++) {
+                $productos = $trabajos[$i]->productos;
+                $adicionales = $trabajos[$i]->adicionales;
+                $primer_producto = $productos->first();
+                $ultimo_producto = $productos->last();
+                $trabajos[$i]['date_format_1'] = date_format($trabajos[$i]['created_at'], 'd-m-Y');            
+                $trabajos[$i]['date_format_2'] = date_format($trabajos[$i]['updated_at'], 'd-m-Y');    
+                $trabajos[$i]['imagen_primer_producto'] = ($primer_producto->imagen);
+                $trabajos[$i]['imagen_ultimo_producto'] = ($ultimo_producto->imagen);
+                $trabajos[$i]['nota_pro'] = $trabajos[$i]['nota'];
+                $trabajos[$i]['servicio'] = $trabajos[$i]->servicio;
+                $trabajos[$i]['trabajador'] = $trabajos[$i]->trabajador;
+
+            }
+            return response()->json($trabajos, 200);
+        }
+    }
 
 }

@@ -26,7 +26,7 @@ class AddServidorToTrabajosTable extends Migration
     public function down()
     {
         Schema::table('trabajos', function (Blueprint $table) {
-            //
+            $table->dropColumn('servidor');
         });
     }
 }

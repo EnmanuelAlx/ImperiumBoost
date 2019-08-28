@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="app">
-        <App-usuario :email="'{{ Auth::user()->email }}'" :avatar="'{{ Auth::user()->avatar }}'"></App-component>
+        <App-usuario :email="'{{ Auth::user()->email }}'" :avatar="'{{ Auth::user()->avatar }}'" :role_id="{{ Auth::user()->role_id }}"></App-component>
     </div>
     <script src="{{ mix("js/app.js") }}"></script>
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}

@@ -21,6 +21,10 @@ class HomeController extends Controller
     public function userDashboard(){
         return view('Application.dashboard');
     }
+    
+    public function workerDashboard(){
+        return view('Application.dashboard');
+    }
 
     public function verificarUsuario(){
         if(Auth::check()){

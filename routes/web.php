@@ -21,6 +21,16 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('verificarCupon', 'CuponController@verificarCupon');
 });
 
+Route::group(['prefix' => 'worker', 'middleware' => 'auth'], function () {
+    Route::get('dashboard', 'HomeController@workerDashboard')->name('worker.dashboard');     
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/getServicios', 'ServicioController@getServicios');
+    Route::post('modifyImage', 'UserController@modifyImage');
+    Route::post('changeEmail', 'UserController@changeEmail');
+    Route::post('changePassword', 'UserController@changePassword');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

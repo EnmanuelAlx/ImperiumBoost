@@ -49,6 +49,11 @@ export default new Router({
             name: 'cuentas',
             component: require('../views/Cuentas').default,
         },
+        {
+            path: '/modificar',
+            name: 'modificar',
+            component: require('../views/ModificarUsuario').default,
+        },
 
     ]
 });

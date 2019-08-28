@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             switch (Auth::user()->role_id) {
                 case 2:
-                    return redirect()->route('user.dashboard');
+                    return redirect()->route('Application.dashboard');
                     break;
                 case 3:
                     return redirect()->route('worker.dashboard');
