@@ -145,9 +145,7 @@ return [
         ],
 
         'widgets' => [
-            'TCG\\Voyager\\Widgets\\UserDimmer',
-            'TCG\\Voyager\\Widgets\\PostDimmer',
-            'TCG\\Voyager\\Widgets\\PageDimmer',
+            // 'App\\Widgets\\Trabajos',
         ],
 
     ],
@@ -194,7 +192,7 @@ return [
     ],
 
     'additional_js' => [
-        //'js/custom.js',
+        'voyagerjs/chat.js',
     ],
 
     'googlemaps' => [

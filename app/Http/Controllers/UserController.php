@@ -125,4 +125,9 @@ class UserController extends Controller
         $user->save();
         return response()->json('Contraseña actualizada', 200);
     }
+
+    public function getTrabajadores(){
+        $trabajadores = User::where('role_id', 3)->get();
+        return response()->json($trabajadores, 200);
+    }
 }

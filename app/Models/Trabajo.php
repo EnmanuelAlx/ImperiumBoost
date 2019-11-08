@@ -11,9 +11,14 @@ class Trabajo extends Model
         'nota', 'monto', 'servicio_id', 'user_id', 'trabajador_id', 'cupon_id', 'metodo_id', 'cuenta', 'servidor', 'nota_cliente'
     ];
 
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
     public function cupon()
     {
-        return $this->hasOne(Cupon::class, 'cupon_id', 'id');
+        return $this->hasOne(Cupon::class, 'id', 'cupon_id');
     }
 
     public function servicio()
@@ -38,6 +43,11 @@ class Trabajo extends Model
 
     public function metodoPago()
     {
-        return $this->hasOne(MetodoPago::class, 'metodo_id', 'id');
+        return $this->hasOne(MetodoPago::class, 'id', 'metodo_id');
+    }
+
+    public function mensajes()
+    {
+        return $this->hasMany(Message::class, 'trabajo_id', 'id');
     }
 }

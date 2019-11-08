@@ -13,7 +13,7 @@
                 <v-col align-self="center">
                     <div class="subheading text-center"  v-for="(precio, i) in info.precios" :key="i" >
                         <span class="subheading" v-if="precio.precio>0">
-                            {{ precio.label }} : {{ precio.precio }}$
+                            {{ precio.label }} : {{ precio.precio }}$ ({{ $store.state.tasa * precio.precio}} {{ $store.state.subfix }})
                         </span>
                     </div>
                 </v-col>
@@ -25,7 +25,7 @@
                 <v-col align-self="center">
                     <div class="subheading text-center" >
                         <span class="subheading">
-                            Total : {{ Cprecio_total }}$
+                            Total : {{ Cprecio_total }}$ ({{ $store.state.tasa * Cprecio_total }} {{ $store.state.subfix }})
                         </span>
                     </div>
                 </v-col>
@@ -68,7 +68,7 @@
                             <tbody>
                                 <tr v-for="(precio, i) in info.precios" :key="i">
                                     <td v-if="precio.precio>0">{{ precio.label }}</td>
-                                    <td class="text-right" v-if="precio.precio>0">{{ precio.precio }}$</td>
+                                    <td class="text-right" v-if="precio.precio>0">{{ precio.precio }}$ ({{ $store.state.tasa * precio.precio}} {{ $store.state.subfix }})</td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -77,7 +77,7 @@
                                         Total
                                     </td>
                                     <td class="text-right">
-                                        {{ Cprecio_total }}$
+                                        {{ Cprecio_total }}$ ({{ $store.state.tasa * Cprecio_total}} {{ $store.state.subfix }})
                                     </td>
                                 </tr>
                                 <tr v-if="total_descuento">

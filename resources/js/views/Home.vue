@@ -42,6 +42,7 @@
                     :rules="[v => !!v || 'Porfavor escribe tu contraseña',]"
                     required
                     v-model="user.password"
+                    @keyup.enter="login"
                   ></v-text-field>
                 </v-form>
               </v-card-text>

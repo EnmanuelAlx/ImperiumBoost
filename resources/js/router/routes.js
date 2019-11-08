@@ -54,6 +54,11 @@ export default new Router({
             name: 'modificar',
             component: require('../views/ModificarUsuario').default,
         },
+        {
+            path: '/historial',
+            name: 'historial',
+            component: require('../views/Historial').default,
+        },
 
     ]
 });

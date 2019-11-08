@@ -14,7 +14,7 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -81,5 +81,34 @@ class TrabajoController extends Controller
     public function destroy(Trabajo $trabajo)
     {
         //
+    }
+
+    public function chat($trabajo){
+        $trabajos = Trabajo::where('status', '!=', -1)->get();
+        $chatActual = Trabajo::find($trabajo);
+        $chatActual->servicio;
+        $chatActual->cupon;
+        $chatActual->metodoPago;
+        $chatActual->trabajador;
+        return view('chat', ['trabajos' => $trabajos, 'chatActual' => $chatActual]);
+    }
+
+    public function marcarPagado(Request $request){
+        $trabajo = Trabajo::find($request->id);
+        $trabajo->status = 1;
+        $trabajo->save();
+        return response()->json($trabajo, 200);
+    }
+
+    public function asignarTrabajador(Request $request){
+        // dd($request->all());
+        $trabajo = Trabajo::find($request->trabajo_id);
+        $trabajo->trabajador_id = $request->trabajador_id;
+        $trabajo->fecha_culminacion_trabajo = $request->fecha_culminacion_trabajo;
+        $trabajo->porcentaje_trabajador = $request->porcentaje_trabajador;
+        $trabajo->fecha_asignacion_trabajador = date('Y-m-d');
+        $trabajo->status = 2;
+        $trabajo->save();
+        return response()->json($trabajo, 200);
     }
 }

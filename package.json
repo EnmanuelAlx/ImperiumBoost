@@ -24,6 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "laravel-echo": "^1.6.0",
+        "pusher-js": "^5.0.2",
+        "vue-full-screen-file-drop": "^2.0.0",
+        "vue-pusher": "^1.0.0",
         "vue-router": "^3.1.2",
         "vue2-animate": "^2.1.0",
         "vuetify": "^2.0.5",

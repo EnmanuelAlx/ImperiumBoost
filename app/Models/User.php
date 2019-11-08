@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Message;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,5 +44,10 @@ class User extends \TCG\Voyager\Models\User
             return \Storage::disk('public')->url('users/default.png');
         }
         return \Storage::disk('public')->url($imagen);
+    }
+
+    public function message()
+    {
+        return $this->hasMany(Message::class);
     }
 }

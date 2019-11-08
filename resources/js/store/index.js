@@ -10,5 +10,17 @@ export default new Vuex.Store({
         email: '',
         version: '',
         role_id: '',
+        subfix: '',
+        tasa: 1,
+        message:{
+            user: '',
+            message: ''
+        }
     },
+    mutations:{
+        message(state, event){
+            state.message.user  = event.user;
+            state.message.message = event.message;
+        }
+    }
 })

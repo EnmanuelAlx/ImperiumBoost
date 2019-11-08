@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-container>
+        <v-container v-if="overlay">
             <v-row>
                 <v-col>
                     <v-overlay :value="overlay" absolute opacity="0">
@@ -49,7 +49,3 @@ import Servicios from '../components/Servicios'
         },
     }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

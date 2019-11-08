@@ -25,6 +25,9 @@ Route::get('getVersion', 'RiotController@getVersion');
 Route::get('getPrecioBajaPrioridad', 'ServicioController@getPrecioBajaPrioridad');
 Route::get('getPrecioPosicionamiento', 'ServicioController@getPrecioPosicionamiento');
 Route::get('getCuentas', 'ServicioController@getCuentas');
+Route::get('getTasa', 'MonedaController@getTasa');
+Route::get('getTrabajadores', 'UserController@getTrabajadores');
+
 
 
 

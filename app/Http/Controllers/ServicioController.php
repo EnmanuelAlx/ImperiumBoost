@@ -484,4 +484,44 @@ EOT;
         }
     }
 
+
+    public function getHistorial(){
+        $user = Auth::user();
+        if($user->role_id == 2){
+            $trabajos = Trabajo::where('user_id', $user->id)->where('status', -1)->get();
+            for ($i=0; $i < $trabajos->count() ; $i++) {
+                $productos = $trabajos[$i]->productos;
+                $adicionales = $trabajos[$i]->adicionales;
+                $primer_producto = $productos->first();
+                $ultimo_producto = $productos->last();
+                $trabajos[$i]['date_format_1'] = date_format($trabajos[$i]['created_at'], 'd-m-Y');            
+                $trabajos[$i]['date_format_2'] = date_format($trabajos[$i]['updated_at'], 'd-m-Y');            
+                $trabajos[$i]['imagen_primer_producto'] = ($primer_producto->imagen);
+                $trabajos[$i]['imagen_ultimo_producto'] = ($ultimo_producto->imagen);
+                $trabajos[$i]['nota_pro'] = strstr($trabajos[$i]['nota'], 'Nombre', true);
+                $trabajos[$i]['servicio'] = $trabajos[$i]->servicio;
+                $trabajos[$i]['trabajador'] = $trabajos[$i]->trabajador;
+            }
+            return response()->json($trabajos, 200);
+        }
+        else if($user->role_id == 3){
+            $trabajos = Trabajo::where('trabajador_id', $user->id)->get();
+            for ($i=0; $i < $trabajos->count() ; $i++) {
+                $productos = $trabajos[$i]->productos;
+                $adicionales = $trabajos[$i]->adicionales;
+                $primer_producto = $productos->first();
+                $ultimo_producto = $productos->last();
+                $trabajos[$i]['date_format_1'] = date_format($trabajos[$i]['created_at'], 'd-m-Y');            
+                $trabajos[$i]['date_format_2'] = date_format($trabajos[$i]['updated_at'], 'd-m-Y');    
+                $trabajos[$i]['imagen_primer_producto'] = ($primer_producto->imagen);
+                $trabajos[$i]['imagen_ultimo_producto'] = ($ultimo_producto->imagen);
+                $trabajos[$i]['nota_pro'] = $trabajos[$i]['nota'];
+                $trabajos[$i]['servicio'] = $trabajos[$i]->servicio;
+                $trabajos[$i]['trabajador'] = $trabajos[$i]->trabajador;
+
+            }
+            return response()->json($trabajos, 200);
+        }
+    }
+
 }

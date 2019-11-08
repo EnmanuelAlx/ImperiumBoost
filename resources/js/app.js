@@ -7,6 +7,7 @@
 require('./bootstrap');
 require('vue2-animate/dist/vue2-animate.min.css')
 
+
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import router from './router/routes'
@@ -17,8 +18,11 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(Vuetify)
 
+// Vue.component('admin-trabajo', require('./components/Trabajos.vue').default);
 Vue.component('home', require('./views/Home').default);
 Vue.component('app-usuario', require('./components/AppComponent.vue').default);
+Vue.component('chatAdmin', require('./components/ChatAdmin.vue').default);
+
 Vue.prototype.$pathImagenes = "http://localhost:8000/imagenes"
 Vue.prototype.$colors = {
     primary: '#9E2FB9',

@@ -32,22 +32,43 @@
             <v-container>
                 <v-row>
                     <v-col class="text-center">
-                        <v-btn :color="this.$colors.primary"><v-icon>chat</v-icon></v-btn>
+                        <v-btn :color="this.$colors.primary" @click="dialog=true"><v-icon>chat</v-icon></v-btn>
                         <v-btn color="red" @click="$emit('closeModal')"><v-icon>close</v-icon></v-btn>
                     </v-col>
                 </v-row>
+                <chat
+                    v-if="dialog"
+                    :dialog="dialog"
+                    :trabajo="servicio"
+                    :user="$store.state.email"
+                    @closeChat="closeChat"
+                />
             </v-container>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+import chat from './Chat'
     export default {
         name:"ModalServicio",
+        components: {
+            chat,
+        },
         props: {
             servicio: {
                 type: Object,
             },
+        },
+        data() {
+            return {
+                dialog: false,
+            }
+        },
+        methods: {
+            closeChat() {
+                this.dialog=false;
+            }
         },
     }
 </script>

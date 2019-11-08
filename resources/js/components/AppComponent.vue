@@ -30,7 +30,9 @@
                 <route :to="{name: 'posicionamiento'}" name="Partidas de posicionamiento" icon="hdr_strong" :link="true"/>
                 <route :to="{name: 'cuentas'}" name="Cuentas" icon="contacts" :link="true"/>
             </v-list-group>
-        
+        <v-list-item-group :color="`${this.$colors.primary}`">
+            <route :to="{name: 'historial'}" name="Historial de Servicios" icon="assignment"/>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -103,6 +105,7 @@ import route from './Route.vue'
         route,
     },
     props: {
+      usuario: Object,
       email: String,
       avatar: String,
       role_id: {
@@ -119,8 +122,14 @@ import route from './Route.vue'
       this.$store.state.email = this.email;
       this.$store.state.imagen = this.avatar;
       this.$store.state.role_id = this.role_id;
-
-      this.versionLol()
+      this.countryCode();
+      this.versionLol();
+      window.Echo.private('chat.'+this.usuario.id)
+        .listen('.my-event-chat', (e) => {
+            console.log('dentro del my-event-chat uysuario');
+            console.log(e);
+            this.$store.commit('message', e);
+      });
     },
     methods: {
       logout() {
@@ -135,6 +144,16 @@ import route from './Route.vue'
         })
         .catch(err => {
           console.error(err); 
+        })
+      },
+      countryCode(){
+        axios.get('/api/getTasa')
+        .then(res=>{
+          this.$store.state.subfix = res.data.subfix
+          this.$store.state.tasa = res.data.tasa
+        })
+        .catch(err=>{
+          this.$store.state.tasa = 1
         })
       }
     },

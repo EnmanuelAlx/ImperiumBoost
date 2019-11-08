@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Moneda;
 use Illuminate\Http\Request;
-
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use function GuzzleHttp\json_decode;
 class MonedaController extends Controller
 {
     /**
@@ -81,5 +83,18 @@ class MonedaController extends Controller
     public function destroy(Moneda $moneda)
     {
         //
+    }
+
+    public function getTasa(){
+        $url = "http://ip-api.com/json";
+        $client = new Client();
+        $response = $client->get($url);
+        $data = $response->getBody();
+        $data = json_decode($data, true);
+        $moneda = Moneda::where('codigo', $data['countryCode'])->first();
+        if($moneda){
+            return response()->json($moneda, 200);
+        }
+        return Moneda::where('codigo', 'US')->first();
     }
 }
