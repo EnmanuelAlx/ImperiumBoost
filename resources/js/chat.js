@@ -1,5 +1,6 @@
 let token = document.head.querySelector('meta[name="csrf-token"]');
-
+const path = '../sonido/sonido.mp3';
+import toastr from 'toastr'
 import Echo from 'laravel-echo';
 window.Pusher = require('pusher-js');
 
@@ -15,7 +16,11 @@ window.Echo = new Echo({
         }
     }
 });
-window.Echo.channel('chat')
-.listen('.my-event-chat', (e) => {
+
+let audio = new Audio(path);
+window.Echo.channel('notification')
+.listen('.notification', (e) => {
     console.log(e);
+    audio.play();
+    toastr.success(`Te envio un mensaje ${e.message.user.name} por el servicio ${e.trabajo.servicio.tipo}`);
 });

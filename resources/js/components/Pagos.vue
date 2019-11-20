@@ -226,6 +226,11 @@ import Cupon from "./Cupon"
             },
             pagar(){
                 let URL = '/user/pay'
+                console.log(this.$store.state.name);
+                if(this.$store.state.name == ''){
+                    alert('Debe introducir nombre y servidor')
+                    return;
+                }
                 let params = {
                     service : this.info.servicio,
                     info: this.info,
@@ -239,6 +244,10 @@ import Cupon from "./Cupon"
                 axios.post(URL, params).then(res => {
                     if(res.status === 205){
                         alert('Cupon usado papu')
+                    }
+                    else if(res.status == 200){
+                        this.$router.push({name: 'dashboard'})
+                        
                     }
                 })
                 .catch(err=>{

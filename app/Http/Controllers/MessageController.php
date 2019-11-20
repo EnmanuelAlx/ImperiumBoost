@@ -6,6 +6,7 @@ use App\Message;
 use App\Trabajo;
 use Illuminate\Http\Request;
 use App\Events\MessageSentEvent;
+use App\Events\NotificationEvent;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -42,9 +43,12 @@ class MessageController extends Controller
             'from' => $user->id,
         ]);
         $message->trabajo;
+        $message->trabajo->servicio;
         $message->trabajo->usuario;
         $message->user;
         event(new MessageSentEvent($user, $message, $message->trabajo->id));
+        event(new NotificationEvent($user, $message, $message->trabajo));
+        
         return response()->json($message, 200);
     }
 

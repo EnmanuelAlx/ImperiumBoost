@@ -84,7 +84,7 @@ class TrabajoController extends Controller
     }
 
     public function chat($trabajo){
-        $trabajos = Trabajo::where('status', '!=', -1)->get();
+        $trabajos = Trabajo::where('status', '!=', -1)->where('status', '!=', 3)->get();
         $chatActual = Trabajo::find($trabajo);
         $chatActual->servicio;
         $chatActual->cupon;
@@ -109,6 +109,21 @@ class TrabajoController extends Controller
         $trabajo->fecha_asignacion_trabajador = date('Y-m-d');
         $trabajo->status = 2;
         $trabajo->save();
+        return response()->json($trabajo, 200);
+    }
+
+    public function cerrarTrabajo(Trabajo $trabajo, Request $request){
+        if($request->opcion == 1){
+            //Se culmino el trabajo
+            $trabajo->status = 3;
+            $trabajo->save();
+        }
+        else{
+            //se cancelo el trabajo
+            $trabajo->status = -1;
+            $trabajo->nota_cancelacion = $request->nota;
+            $trabajo->save();
+        }
         return response()->json($trabajo, 200);
     }
 }

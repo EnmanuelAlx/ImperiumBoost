@@ -2193,6 +2193,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     usuario: {
@@ -2216,7 +2254,10 @@ __webpack_require__.r(__webpack_exports__);
       trabajador_seleccionado: '',
       archivo: null,
       fecha_culminacion_trabajo: this.trabajo.fecha_culminacion_trabajo ? this.trabajo.fecha_culminacion_trabajo : new Date().toISOString().substr(0, 10),
-      porcentaje_trabajador: this.trabajo.porcentaje_trabajador ? this.trabajo.porcentaje_trabajador : 50.0
+      porcentaje_trabajador: this.trabajo.porcentaje_trabajador ? this.trabajo.porcentaje_trabajador : 50.0,
+      dialogCerrarTrabajo: false,
+      btnCancelar: 1,
+      notaCancelacion: ''
     };
   },
   beforeDestroy: function beforeDestroy() {
@@ -2299,6 +2340,17 @@ __webpack_require__.r(__webpack_exports__);
         _this5.mensajes.push(res.data);
 
         _this5.archivo = null;
+      });
+    },
+    cerrarTrabajo: function cerrarTrabajo() {
+      var params = {
+        'opcion': this.btnCancelar,
+        'nota': this.notaCancelacion
+      };
+      axios.post("/admin/cerrarTrabajo/".concat(this.trabajo.id), params).then(function (res) {
+        location.reload();
+      })["catch"](function (err) {
+        console.error(err);
       });
     }
   }
@@ -2683,6 +2735,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ModalServicio",
@@ -2946,7 +3010,16 @@ __webpack_require__.r(__webpack_exports__);
       this.cupon = nombreCupon;
     },
     pagar: function pagar() {
+      var _this4 = this;
+
       var URL = '/user/pay';
+      console.log(this.$store.state.name);
+
+      if (this.$store.state.name == '') {
+        alert('Debe introducir nombre y servidor');
+        return;
+      }
+
       var params = {
         service: this.info.servicio,
         info: this.info,
@@ -2960,6 +3033,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(URL, params).then(function (res) {
         if (res.status === 205) {
           alert('Cupon usado papu');
+        } else if (res.status == 200) {
+          _this4.$router.push({
+            name: 'dashboard'
+          });
         }
       })["catch"](function (err) {
         console.log(err);
@@ -3113,6 +3190,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SearchSummoner',
   props: {
@@ -3123,7 +3202,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       search: {
-        nombre: 'Zeirt',
+        nombre: '',
         servidor: 'la1'
       },
       servers: [{
@@ -3144,7 +3223,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      console.log('getting info....');
       axios.post("/api/".concat(this.URL), this.search).then(function (res) {
         _this.loading = false;
         _this.$store.state.name = _this.search.nombre, _this.$store.state.server = _this.search.servidor;
@@ -3154,6 +3232,12 @@ __webpack_require__.r(__webpack_exports__);
         _this.loading = false;
         console.error(err);
       });
+    },
+    changeInput: function changeInput() {
+      this.$store.state.name = this.search.nombre;
+    },
+    changeSelect: function changeSelect() {
+      this.$store.state.server = this.search.servidor;
     }
   }
 });
@@ -4459,7 +4543,8 @@ __webpack_require__.r(__webpack_exports__);
       to: '',
       to_image: '',
       precio: 0,
-      productos: []
+      productos: [],
+      status: true
     };
   },
   created: function created() {
@@ -33634,333 +33719,306 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("v-app", [
     _vm.usuario
-      ? _c("div", { staticClass: "card text-left" }, [
-          _c(
-            "h4",
-            {
-              staticClass: "card-header text-white",
-              staticStyle: { "background-color": "#3F3F3F" }
-            },
-            [
-              _vm._v(
-                "Chat con: " +
-                  _vm._s(_vm.usuario.name) +
-                  " sobre " +
-                  _vm._s(_vm.trabajo.servicio.descripcion)
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "card-body",
-              staticStyle: { "overflow-y": "auto", "max-height": "450px" }
-            },
-            _vm._l(_vm.mensajes, function(mensaje) {
-              return _c("div", { key: mensaje.id }, [
-                mensaje.user.role_id != "1"
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "text-left",
-                        staticStyle: { margin: "10px" }
-                      },
-                      [
-                        _c(
-                          "v-chip",
-                          {
-                            staticClass: "ma-2 text-white",
-                            attrs: { color: _vm.$colors.primary }
-                          },
-                          [
-                            _c(
-                              "v-avatar",
-                              { attrs: { left: "" } },
-                              [_c("v-icon", [_vm._v("account_circle")])],
-                              1
-                            ),
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(mensaje.user.name) +
-                                ": " +
-                                _vm._s(mensaje.message) +
-                                "\n                "
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        mensaje.image
-                          ? _c(
-                              "div",
-                              [_c("v-img", { attrs: { src: mensaje.image } })],
-                              1
-                            )
-                          : _vm._e()
-                      ],
-                      1
-                    )
-                  : _c(
-                      "div",
-                      {
-                        staticClass: "text-right",
-                        staticStyle: { margin: "10px" }
-                      },
-                      [
-                        _c(
-                          "v-chip",
-                          { staticClass: "ma-2", attrs: { color: "#D8D8D8" } },
-                          [
-                            _c(
-                              "v-avatar",
-                              { attrs: { left: "" } },
-                              [_c("v-icon", [_vm._v("account_circle")])],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c("span", { staticStyle: { color: "black" } }, [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(mensaje.user.name) +
-                                  ": "
+      ? _c(
+          "div",
+          { staticClass: "card text-left" },
+          [
+            _c(
+              "h4",
+              {
+                staticClass: "card-header text-white",
+                staticStyle: { "background-color": "#3F3F3F" }
+              },
+              [
+                _vm._v(
+                  "Chat con: " +
+                    _vm._s(_vm.usuario.name) +
+                    " sobre " +
+                    _vm._s(_vm.trabajo.servicio.descripcion)
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "card-body",
+                staticStyle: { "overflow-y": "auto", "max-height": "450px" }
+              },
+              _vm._l(_vm.mensajes, function(mensaje) {
+                return _c("div", { key: mensaje.id }, [
+                  mensaje.user.role_id != "1"
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "text-left",
+                          staticStyle: { margin: "10px" }
+                        },
+                        [
+                          _c(
+                            "v-chip",
+                            {
+                              staticClass: "ma-2 text-white",
+                              attrs: { color: _vm.$colors.primary }
+                            },
+                            [
+                              _c(
+                                "v-avatar",
+                                { attrs: { left: "" } },
+                                [_c("v-icon", [_vm._v("account_circle")])],
+                                1
                               ),
-                              !mensaje.image
-                                ? _c("span", [_vm._v(_vm._s(mensaje.message))])
-                                : _vm._e()
-                            ])
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        mensaje.image
-                          ? _c(
-                              "div",
-                              [_c("v-img", { attrs: { src: mensaje.image } })],
-                              1
-                            )
-                          : _vm._e()
-                      ],
-                      1
-                    )
-              ])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer" }, [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-md-11" },
-                [
-                  _c("v-text-field", {
-                    staticStyle: { "margin-top": "10px" },
-                    attrs: {
-                      label: "Escriba un mensaje",
-                      outlined: "",
-                      "append-icon": "send"
-                    },
-                    on: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.sent($event)
-                      }
-                    },
-                    model: {
-                      value: _vm.mensaje,
-                      callback: function($$v) {
-                        _vm.mensaje = $$v
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(mensaje.user.name) +
+                                  ": " +
+                                  _vm._s(mensaje.message) +
+                                  "\n                "
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          mensaje.image
+                            ? _c(
+                                "div",
+                                [
+                                  _c("v-img", { attrs: { src: mensaje.image } })
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    : _c(
+                        "div",
+                        {
+                          staticClass: "text-right",
+                          staticStyle: { margin: "10px" }
+                        },
+                        [
+                          _c(
+                            "v-chip",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { color: "#D8D8D8" }
+                            },
+                            [
+                              _c(
+                                "v-avatar",
+                                { attrs: { left: "" } },
+                                [_c("v-icon", [_vm._v("account_circle")])],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("span", { staticStyle: { color: "black" } }, [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(mensaje.user.name) +
+                                    ": "
+                                ),
+                                !mensaje.image
+                                  ? _c("span", [
+                                      _vm._v(_vm._s(mensaje.message))
+                                    ])
+                                  : _vm._e()
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          mensaje.image
+                            ? _c(
+                                "div",
+                                [
+                                  _c("v-img", { attrs: { src: mensaje.image } })
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                ])
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-11" },
+                  [
+                    _c("v-text-field", {
+                      staticStyle: { "margin-top": "10px" },
+                      attrs: {
+                        label: "Escriba un mensaje",
+                        outlined: "",
+                        "append-icon": "send"
                       },
-                      expression: "mensaje"
-                    }
-                  })
-                ],
-                1
-              ),
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.sent($event)
+                        }
+                      },
+                      model: {
+                        value: _vm.mensaje,
+                        callback: function($$v) {
+                          _vm.mensaje = $$v
+                        },
+                        expression: "mensaje"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-1" },
+                  [
+                    _c("v-file-input", {
+                      on: { change: _vm.onDrop },
+                      model: {
+                        value: _vm.archivo,
+                        callback: function($$v) {
+                          _vm.archivo = $$v
+                        },
+                        expression: "archivo"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-md-1" },
+                { staticClass: "row" },
                 [
-                  _c("v-file-input", {
-                    on: { change: _vm.onDrop },
-                    model: {
-                      value: _vm.archivo,
-                      callback: function($$v) {
-                        _vm.archivo = $$v
-                      },
-                      expression: "archivo"
-                    }
-                  })
+                  _vm.trabajo.status == 0
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success",
+                          on: { click: _vm.marcarPagado }
+                        },
+                        [_vm._v("Marcar como pagado")]
+                      )
+                    : _vm.trabajo.status == 1 || _vm.trabajo.status == 2
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info",
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = true
+                            }
+                          }
+                        },
+                        [_vm._v("Asignar o cambiar Trabajador")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          _vm.dialogCerrarTrabajo = true
+                        }
+                      }
+                    },
+                    [_vm._v("Cerrar trabajo")]
+                  )
                 ],
                 1
               )
             ]),
             _vm._v(" "),
             _c(
-              "div",
-              { staticClass: "row" },
+              "v-dialog",
+              {
+                attrs: { "max-width": "500" },
+                model: {
+                  value: _vm.dialogCerrarTrabajo,
+                  callback: function($$v) {
+                    _vm.dialogCerrarTrabajo = $$v
+                  },
+                  expression: "dialogCerrarTrabajo"
+                }
+              },
               [
-                _vm.trabajo.status == 0
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success",
-                        on: { click: _vm.marcarPagado }
-                      },
-                      [_vm._v("Marcar como pagado")]
-                    )
-                  : _vm.trabajo.status == 1 || _vm.trabajo.status == 2
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info",
-                        on: {
-                          click: function($event) {
-                            _vm.dialog = true
-                          }
-                        }
-                      },
-                      [_vm._v("Asignar o cambiar Trabajador")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("v-spacer"),
-                _vm._v(" "),
-                _c("button", { staticClass: "btn btn-danger" }, [
-                  _vm._v("Cerrar trabajo")
-                ])
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          !_vm.chatTrabajador
-            ? _c(
-                "div",
-                [
-                  _c(
-                    "v-dialog",
-                    {
-                      attrs: { "max-width": "500" },
-                      model: {
-                        value: _vm.dialog,
-                        callback: function($$v) {
-                          _vm.dialog = $$v
-                        },
-                        expression: "dialog"
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "card" }, [
-                        _c("div", { staticClass: "card-header" }, [
-                          _vm.trabajo.trabajador
-                            ? _c("div", [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col" }, [
-                                    _c("b", [_vm._v("Trabajador actual")]),
-                                    _vm._v(
-                                      ": " +
-                                        _vm._s(_vm.trabajo.trabajador.name) +
-                                        "\n                            "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-primary",
-                                        on: { click: _vm.cargarTrabajadores }
-                                      },
-                                      [_vm._v("Cambiar Trabajador")]
-                                    )
-                                  ])
-                                ])
-                              ])
-                            : _c("div", [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-primary",
-                                        on: { click: _vm.cargarTrabajadores }
-                                      },
-                                      [_vm._v("Cargar trabajadores")]
-                                    )
-                                  ])
-                                ])
-                              ])
-                        ]),
-                        _vm._v(" "),
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { attrs: { "primary-title": "" } }, [
+                      _c("div", [
+                        _c("h3", { staticClass: "headline mb-0" }, [
+                          _vm._v("Cerrar Trabajo")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-text",
+                      { staticClass: "text-center" },
+                      [
                         _c(
-                          "div",
-                          { staticClass: "card-body" },
+                          "v-row",
                           [
                             _c(
-                              "v-list",
-                              { attrs: { nav: "", dense: "" } },
+                              "v-btn-toggle",
+                              {
+                                model: {
+                                  value: _vm.btnCancelar,
+                                  callback: function($$v) {
+                                    _vm.btnCancelar = $$v
+                                  },
+                                  expression: "btnCancelar"
+                                }
+                              },
                               [
-                                _c("v-subheader", [_vm._v("Trabajadores")]),
+                                _c(
+                                  "v-col",
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: { value: "1", color: "success" }
+                                      },
+                                      [_vm._v("Culminar Trabajo")]
+                                    )
+                                  ],
+                                  1
+                                ),
                                 _vm._v(" "),
                                 _c(
-                                  "v-list-item-group",
-                                  _vm._l(_vm.trabajadores, function(
-                                    trabajador
-                                  ) {
-                                    return _c(
-                                      "v-list-item",
-                                      {
-                                        key: trabajador.id,
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.trabajadorSeleccionado(
-                                              trabajador.id
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "v-list-item-avatar",
-                                          [
-                                            _c("v-img", {
-                                              attrs: { src: trabajador.avatar }
-                                            })
-                                          ],
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-list-item-content",
-                                          [
-                                            _c("v-list-item-title", {
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  trabajador.name
-                                                )
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
+                                  "v-col",
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      { attrs: { value: "2", color: "red" } },
+                                      [_vm._v("Cancelar Trabajo")]
                                     )
-                                  }),
+                                  ],
                                   1
                                 )
                               ],
@@ -33970,188 +34028,379 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "card-footer" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c(
-                              "div",
-                              { staticClass: "col" },
+                        _vm.btnCancelar == 2
+                          ? _c(
+                              "v-row",
                               [
                                 _c(
-                                  "v-menu",
-                                  {
-                                    ref: "menu",
-                                    attrs: {
-                                      "close-on-content-click": false,
-                                      "return-value":
-                                        _vm.fecha_culminacion_trabajo,
-                                      transition: "scale-transition",
-                                      "offset-y": "",
-                                      "min-width": "290px"
-                                    },
-                                    on: {
-                                      "update:returnValue": function($event) {
-                                        _vm.fecha_culminacion_trabajo = $event
-                                      },
-                                      "update:return-value": function($event) {
-                                        _vm.fecha_culminacion_trabajo = $event
-                                      }
-                                    },
-                                    scopedSlots: _vm._u(
-                                      [
-                                        {
-                                          key: "activator",
-                                          fn: function(ref) {
-                                            var on = ref.on
-                                            return [
-                                              _c(
-                                                "v-text-field",
-                                                _vm._g(
-                                                  {
-                                                    attrs: {
-                                                      label:
-                                                        "Fecha de culminacion del trabajo",
-                                                      "prepend-icon": "event",
-                                                      readonly: "",
-                                                      outlined: ""
-                                                    },
-                                                    model: {
-                                                      value:
-                                                        _vm.fecha_culminacion_trabajo,
-                                                      callback: function($$v) {
-                                                        _vm.fecha_culminacion_trabajo = $$v
-                                                      },
-                                                      expression:
-                                                        "fecha_culminacion_trabajo"
-                                                    }
-                                                  },
-                                                  on
-                                                )
-                                              )
-                                            ]
-                                          }
-                                        }
-                                      ],
-                                      null,
-                                      false,
-                                      2860689811
-                                    ),
-                                    model: {
-                                      value: _vm.menu,
-                                      callback: function($$v) {
-                                        _vm.menu = $$v
-                                      },
-                                      expression: "menu"
-                                    }
-                                  },
+                                  "v-col",
                                   [
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-date-picker",
-                                      {
-                                        attrs: {
-                                          "no-title": "",
-                                          scrollable: ""
-                                        },
-                                        model: {
-                                          value: _vm.fecha_culminacion_trabajo,
-                                          callback: function($$v) {
-                                            _vm.fecha_culminacion_trabajo = $$v
-                                          },
-                                          expression:
-                                            "fecha_culminacion_trabajo"
-                                        }
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label:
+                                          "Escriba el motivo de la cancelación",
+                                        outlined: ""
                                       },
-                                      [
-                                        _c("v-spacer"),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              text: "",
-                                              color: "primary"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                _vm.menu = false
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("Cancel")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              text: "",
-                                              color: "primary"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.$refs.menu.save(
-                                                  _vm.fecha_culminacion_trabajo
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("OK")]
-                                        )
-                                      ],
-                                      1
-                                    )
+                                      model: {
+                                        value: _vm.notaCancelacion,
+                                        callback: function($$v) {
+                                          _vm.notaCancelacion = $$v
+                                        },
+                                        expression: "notaCancelacion"
+                                      }
+                                    })
                                   ],
                                   1
                                 )
                               ],
                               1
-                            ),
-                            _vm._v(" "),
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "v-row",
+                          [
                             _c(
-                              "div",
-                              { staticClass: "col" },
+                              "v-col",
                               [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    outlined: "",
-                                    label: "Porcentaje del trabajador"
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "warning" },
+                                    on: { click: _vm.cerrarTrabajo }
                                   },
-                                  model: {
-                                    value: _vm.porcentaje_trabajador,
-                                    callback: function($$v) {
-                                      _vm.porcentaje_trabajador = $$v
-                                    },
-                                    expression: "porcentaje_trabajador"
-                                  }
-                                })
+                                  [_vm._v("Enviar")]
+                                )
                               ],
                               1
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-12" }, [
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            !_vm.chatTrabajador
+              ? _c(
+                  "div",
+                  [
+                    _c(
+                      "v-dialog",
+                      {
+                        attrs: { "max-width": "500" },
+                        model: {
+                          value: _vm.dialog,
+                          callback: function($$v) {
+                            _vm.dialog = $$v
+                          },
+                          expression: "dialog"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "card" }, [
+                          _c("div", { staticClass: "card-header" }, [
+                            _vm.trabajo.trabajador
+                              ? _c("div", [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col" }, [
+                                      _c("b", [_vm._v("Trabajador actual")]),
+                                      _vm._v(
+                                        ": " +
+                                          _vm._s(_vm.trabajo.trabajador.name) +
+                                          "\n                            "
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          on: { click: _vm.cargarTrabajadores }
+                                        },
+                                        [_vm._v("Cambiar Trabajador")]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              : _c("div", [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          on: { click: _vm.cargarTrabajadores }
+                                        },
+                                        [_vm._v("Cargar trabajadores")]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "card-body" },
+                            [
                               _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-primary",
-                                  on: { click: _vm.asignarTrabajador }
-                                },
+                                "v-list",
+                                { attrs: { nav: "", dense: "" } },
                                 [
-                                  _vm._v(
-                                    "\n                                Asignar trabajador\n                            "
+                                  _c("v-subheader", [_vm._v("Trabajadores")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item-group",
+                                    _vm._l(_vm.trabajadores, function(
+                                      trabajador
+                                    ) {
+                                      return _c(
+                                        "v-list-item",
+                                        {
+                                          key: trabajador.id,
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.trabajadorSeleccionado(
+                                                trabajador.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-list-item-avatar",
+                                            [
+                                              _c("v-img", {
+                                                attrs: {
+                                                  src: trabajador.avatar
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-list-item-content",
+                                            [
+                                              _c("v-list-item-title", {
+                                                domProps: {
+                                                  textContent: _vm._s(
+                                                    trabajador.name
+                                                  )
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    }),
+                                    1
                                   )
-                                ]
+                                ],
+                                1
                               )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "card-footer" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "col" },
+                                [
+                                  _c(
+                                    "v-menu",
+                                    {
+                                      ref: "menu",
+                                      attrs: {
+                                        "close-on-content-click": false,
+                                        "return-value":
+                                          _vm.fecha_culminacion_trabajo,
+                                        transition: "scale-transition",
+                                        "offset-y": "",
+                                        "min-width": "290px"
+                                      },
+                                      on: {
+                                        "update:returnValue": function($event) {
+                                          _vm.fecha_culminacion_trabajo = $event
+                                        },
+                                        "update:return-value": function(
+                                          $event
+                                        ) {
+                                          _vm.fecha_culminacion_trabajo = $event
+                                        }
+                                      },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              return [
+                                                _c(
+                                                  "v-text-field",
+                                                  _vm._g(
+                                                    {
+                                                      attrs: {
+                                                        label:
+                                                          "Fecha de culminacion del trabajo",
+                                                        "prepend-icon": "event",
+                                                        readonly: "",
+                                                        outlined: ""
+                                                      },
+                                                      model: {
+                                                        value:
+                                                          _vm.fecha_culminacion_trabajo,
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.fecha_culminacion_trabajo = $$v
+                                                        },
+                                                        expression:
+                                                          "fecha_culminacion_trabajo"
+                                                      }
+                                                    },
+                                                    on
+                                                  )
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        false,
+                                        2860689811
+                                      ),
+                                      model: {
+                                        value: _vm.menu,
+                                        callback: function($$v) {
+                                          _vm.menu = $$v
+                                        },
+                                        expression: "menu"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-date-picker",
+                                        {
+                                          attrs: {
+                                            "no-title": "",
+                                            scrollable: ""
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.fecha_culminacion_trabajo,
+                                            callback: function($$v) {
+                                              _vm.fecha_culminacion_trabajo = $$v
+                                            },
+                                            expression:
+                                              "fecha_culminacion_trabajo"
+                                          }
+                                        },
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                text: "",
+                                                color: "primary"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.menu = false
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Cancel")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                text: "",
+                                                color: "primary"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.$refs.menu.save(
+                                                    _vm.fecha_culminacion_trabajo
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("OK")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col" },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      outlined: "",
+                                      label: "Porcentaje del trabajador"
+                                    },
+                                    model: {
+                                      value: _vm.porcentaje_trabajador,
+                                      callback: function($$v) {
+                                        _vm.porcentaje_trabajador = $$v
+                                      },
+                                      expression: "porcentaje_trabajador"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-12" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    on: { click: _vm.asignarTrabajador }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Asignar trabajador\n                            "
+                                    )
+                                  ]
+                                )
+                              ])
                             ])
                           ])
                         ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            : _vm._e()
-        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e()
+          ],
+          1
+        )
       : _vm._e()
   ])
 }
@@ -34688,10 +34937,11 @@ var render = function() {
             [
               _c(
                 "v-row",
+                { staticClass: "text-center" },
                 [
                   _c(
                     "v-col",
-                    { staticClass: "text-center" },
+                    { attrs: { cols: "4" } },
                     [
                       _c(
                         "v-btn",
@@ -34705,8 +34955,15 @@ var render = function() {
                         },
                         [_c("v-icon", [_vm._v("chat")])],
                         1
-                      ),
-                      _vm._v(" "),
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "4" } },
+                    [
                       _c(
                         "v-btn",
                         {
@@ -34722,6 +34979,33 @@ var render = function() {
                       )
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "4", "justify-self": "center" } },
+                    [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "https://wa.me/584147650847",
+                            target: "_blank",
+                            rel: "noopener noreferrer"
+                          }
+                        },
+                        [
+                          _c("v-img", {
+                            attrs: {
+                              src: this.$pathImagenes + "/Whatsapp_icon.png",
+                              "max-height": "64",
+                              "max-width": "50"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]
                   )
                 ],
                 1
@@ -35258,6 +35542,7 @@ var render = function() {
               clearable: "",
               color: "" + this.$colors.primary
             },
+            on: { change: _vm.changeInput },
             model: {
               value: _vm.search.nombre,
               callback: function($$v) {
@@ -35292,7 +35577,8 @@ var render = function() {
                   return null
                 }
                 return _vm.getInfo($event)
-              }
+              },
+              change: _vm.changeSelect
             },
             model: {
               value: _vm.search.servidor,
@@ -90767,8 +91053,8 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    name: 'Zeirt',
-    server: 'la1',
+    name: '',
+    server: '',
     imagen: '',
     email: '',
     version: '',

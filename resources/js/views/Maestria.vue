@@ -99,6 +99,7 @@ import Pago from '../components/Pagos'
                 to_image: '',
                 precio: 0,
                 productos: [],
+                status: true,
             }
         },
         created () {
@@ -120,6 +121,7 @@ import Pago from '../components/Pagos'
         },
         methods: {
             getData(data) {
+                
             },
             getChamps(){
                 axios.get('/api/getChamps')

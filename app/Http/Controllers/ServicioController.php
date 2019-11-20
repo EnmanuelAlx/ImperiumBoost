@@ -449,7 +449,12 @@ EOT;
 
     public function getServicios(){
         if(Auth::user()->role_id == 2){
-            $trabajos = Trabajo::where('user_id', Auth::user()->id)->where('status', '!=', -1)->get();
+            $trabajos = Trabajo::where('user_id', Auth::user()->id)
+            ->where('status', '!=', -1)
+            ->where('status', '!=', 3)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
             for ($i=0; $i < $trabajos->count() ; $i++) {
                 $productos = $trabajos[$i]->productos;
                 $adicionales = $trabajos[$i]->adicionales;
@@ -465,7 +470,10 @@ EOT;
             }
             return response()->json($trabajos, 200);
         }else if(Auth::user()->role_id == 3){
-            $trabajos = Trabajo::where('trabajador_id', Auth::user()->id)->where('status', '!=', -1)->get();
+            $trabajos = Trabajo::where('trabajador_id', Auth::user()->id)
+            ->where('status', '!=', -1)
+            ->where('status', '!=', 3)
+            ->get();
             for ($i=0; $i < $trabajos->count() ; $i++) {
                 $productos = $trabajos[$i]->productos;
                 $adicionales = $trabajos[$i]->adicionales;
@@ -488,7 +496,10 @@ EOT;
     public function getHistorial(){
         $user = Auth::user();
         if($user->role_id == 2){
-            $trabajos = Trabajo::where('user_id', $user->id)->where('status', -1)->get();
+            $trabajos = Trabajo::where('user_id', $user->id)
+            ->where('status', -1)
+            ->orWhere('status', 3)
+            ->get();
             for ($i=0; $i < $trabajos->count() ; $i++) {
                 $productos = $trabajos[$i]->productos;
                 $adicionales = $trabajos[$i]->adicionales;

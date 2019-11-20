@@ -14,3 +14,8 @@
 Broadcast::channel('chat.{seder}', function ($user, $seder) {
     return true;
 });
+
+
+Broadcast::channel('notification', function ($user) {
+    return true;
+});

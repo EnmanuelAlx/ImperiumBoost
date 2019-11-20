@@ -42,11 +42,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
-    Route::get('/chat/{trabajo}', 'TrabajoController@chat')->name('chat-admin');
+    Route::get('/chatUsuarios/{trabajo}', 'TrabajoController@chat')->name('chat-admin');
     Route::post('logout', 'HomeController@logout')->name('voyager.logout');
     Route::post('marcar-pago', 'TrabajoController@marcarPagado');
     Route::post('asignarTrabajador', 'TrabajoController@asignarTrabajador');
     Route::post('/messages', 'MessageController@sentMessageAdmin');
     Route::post('/messages-files', 'MessageController@sentFilesAdmin');
-
+    Route::post('/cerrarTrabajo/{trabajo}', 'TrabajoController@cerrarTrabajo');
 });

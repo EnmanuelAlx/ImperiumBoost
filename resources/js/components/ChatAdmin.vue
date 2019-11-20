@@ -61,10 +61,48 @@
                 <button class="btn btn-success" v-if="trabajo.status == 0" @click="marcarPagado">Marcar como pagado</button> 
                 <button class="btn btn-info" @click="dialog = true" v-else-if="trabajo.status == 1 || trabajo.status == 2">Asignar o cambiar Trabajador</button>
                 <v-spacer></v-spacer>
-                <button class="btn btn-danger">Cerrar trabajo</button>
+                <button class="btn btn-danger" @click="dialogCerrarTrabajo = true">Cerrar trabajo</button>
             </div>
         </div>
 
+        <v-dialog
+            v-model="dialogCerrarTrabajo"
+            max-width="500"
+        >
+            <v-card>
+                <v-card-title primary-title>
+                    <div>
+                        <h3 class="headline mb-0">Cerrar Trabajo</h3>
+                    </div>
+                </v-card-title>
+                <v-card-text class="text-center">
+                    <v-row>
+                        <v-btn-toggle v-model="btnCancelar">
+                            <v-col>
+                                <v-btn value="1" color="success">Culminar Trabajo</v-btn>
+                            </v-col>
+                            <v-col>
+                                <v-btn value="2" color="red">Cancelar Trabajo</v-btn>
+                            </v-col>
+                        </v-btn-toggle>
+                    </v-row>
+                    <v-row v-if="btnCancelar == 2">
+                        <v-col>
+                            <v-text-field
+                                v-model="notaCancelacion"
+                                label="Escriba el motivo de la cancelación"
+                                outlined
+                            />
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-btn color="warning" @click="cerrarTrabajo">Enviar</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
 
         <div v-if="!chatTrabajador">
             <v-dialog
@@ -190,6 +228,9 @@
                 archivo: null,
                 fecha_culminacion_trabajo: (this.trabajo.fecha_culminacion_trabajo) ? this.trabajo.fecha_culminacion_trabajo : new Date().toISOString().substr(0, 10),
                 porcentaje_trabajador: (this.trabajo.porcentaje_trabajador) ? this.trabajo.porcentaje_trabajador : 50.0,
+                dialogCerrarTrabajo: false,
+                btnCancelar: 1,
+                notaCancelacion: '',
             }
         },
         beforeDestroy(){
@@ -270,7 +311,19 @@
                     this.mensajes.push(res.data);                    
                     this.archivo = null
                 });
-                  
+            },
+            cerrarTrabajo(){
+                let params = {
+                    'opcion': this.btnCancelar,
+                    'nota' :  this.notaCancelacion
+                }
+                axios.post(`/admin/cerrarTrabajo/${this.trabajo.id}`, params)
+                .then(res => {
+                    location.reload();
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
             },
         },
 

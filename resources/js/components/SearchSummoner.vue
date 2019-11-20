@@ -9,6 +9,7 @@
             clearable
             v-model="search.nombre"
             :color="`${this.$colors.primary}`"
+            @change="changeInput"
             />
         </div>
         <div class="col-3">
@@ -21,6 +22,7 @@
                 @click:append-outer="getInfo"
                 @keyup.enter="getInfo"
                 :color="`${this.$colors.primary}`"
+                @change="changeSelect"
             ></v-select>
         </div>
         <v-progress-linear :color="`${this.$colors.primary}`" :indeterminate="loading" :active="loading" v-if="loading"></v-progress-linear>
@@ -38,7 +40,7 @@
         data() {
             return {
                 search:{
-                    nombre: 'Zeirt',
+                    nombre: '',
                     servidor: 'la1'
                 },
                 servers: [
@@ -52,7 +54,6 @@
         methods: {
             getInfo() {
                 this.loading = true;
-                console.log('getting info....');
                 axios.post(`/api/${this.URL}`,this.search)
                 .then(res => {
                     this.loading = false
@@ -65,6 +66,12 @@
                     console.error(err); 
                 })
             },
+            changeInput(){
+                this.$store.state.name = this.search.nombre
+            },
+            changeSelect(){
+                this.$store.state.server = this.search.servidor
+            }
         },
     }
 </script>

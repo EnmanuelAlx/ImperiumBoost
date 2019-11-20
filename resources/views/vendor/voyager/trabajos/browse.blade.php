@@ -21,53 +21,55 @@
     <div class="container">
         <div class="row justify-content-center">
             @foreach ($dataTypeContent  as $data)
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="col-md-8">
-                                <h5 class="card-title">
-                                    Cuenta: {{ $data->cuenta }} 
-                                    @switch($data->status)
-                                        @case(0)
-                                            (Pendiente por pagar)
-                                        @break
-                                        @case(1)
-                                            (Esperando por asignar trabajador)
-                                        @break
-                                        @case(2)
-                                            (Trabajador asignado: {{ $data->trabajador->name }})
-                                        @break
-                                    @endswitch 
-                                </h5>
-                                <p class="card-text">
-                                    {{ $data->nota }} <br>
-                                    Servidor: {{ ($data->servidor == 'la1') ? 'LAN' : (($data->servidor == 'la2') ? 'LAS' : 'NA')  }} <br>
-                                    Metodo de pago: {{ $data->metodoPago->nombre }} <br>
-                                    @if ($data->cupon_id)
-                                        Cupon: {{ $data->cupon->nombre }} <br>
+                @if ($data->status != -1 && $data->status != 3)
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-8">
+                                    <h5 class="card-title">
+                                        Cuenta: {{ $data->cuenta }} 
+                                        @switch($data->status)
+                                            @case(0)
+                                                (Pendiente por pagar)
+                                            @break
+                                            @case(1)
+                                                (Esperando por asignar trabajador)
+                                            @break
+                                            @case(2)
+                                                (Trabajador asignado: {{ $data->trabajador->name }})
+                                            @break
+                                        @endswitch 
+                                    </h5>
+                                    <p class="card-text">
+                                        {{ $data->nota }} <br>
+                                        Servidor: {{ ($data->servidor == 'la1') ? 'LAN' : (($data->servidor == 'la2') ? 'LAS' : 'NA')  }} <br>
+                                        Metodo de pago: {{ $data->metodoPago->nombre }} <br>
+                                        @if ($data->cupon_id)
+                                            Cupon: {{ $data->cupon->nombre }} <br>
+                                        @endif
+                                        @if ($data->nota_cliente)
+                                            Nota del cliente: {{ $data->nota_cliente }}
+                                        @endif
+                                    </p>
+                                    <a href="{{ route('chat-admin', $data->id) }}" class="card-link btn btn-success">Chat</a>
+                                    {{-- <a href="#" class="card-link btn btn-warning">Editar</a> --}}
+                                    {{-- <a href="#" class="card-link btn btn-danger">Cerrar Trabajo</a> --}}
+                                </div>
+                                <div class="col-md-4">
+                                    <h2>
+                                        Precio: {{ $data->monto }}$
+                                    </h2>
+                                    @if ($data->fecha_asignacion_trabajador)
+                                        Asignacion del trabajador: {{ $data->fecha_asignacion_trabajador }} <br>
                                     @endif
-                                    @if ($data->nota_cliente)
-                                        Nota del cliente: {{ $data->nota_cliente }}
+                                    @if ($data->fecha_culminacion_trabajo)
+                                        Fecha de culminacion del trabajo: {{ $data->fecha_culminacion_trabajo }}
                                     @endif
-                                </p>
-                                <a href="{{ route('chat-admin', $data->id) }}" class="card-link btn btn-success">Chat</a>
-                                <a href="#" class="card-link btn btn-warning">Editar</a>
-                                <a href="#" class="card-link btn btn-danger">Cerrar Trabajo</a>
-                            </div>
-                            <div class="col-md-4">
-                                <h2>
-                                    Precio: {{ $data->monto }}$
-                                </h2>
-                                @if ($data->fecha_asignacion_trabajador)
-                                    Asignacion del trabajador: {{ $data->fecha_asignacion_trabajador }} <br>
-                                @endif
-                                @if ($data->fecha_culminacion_trabajo)
-                                    Fecha de culminacion del trabajo: {{ $data->fecha_culminacion_trabajo }}
-                                @endif
-                            </div>
-                        </div>   
-                    </div>        
-                </div>
+                                </div>
+                            </div>   
+                        </div>        
+                    </div>
+                @endif
             @endforeach
         </div>
     </div>

@@ -30,10 +30,22 @@
         </v-card-text>
         <v-card-actions>
             <v-container>
-                <v-row>
-                    <v-col class="text-center">
+                <v-row class="text-center">
+                    <v-col cols="4">
                         <v-btn :color="this.$colors.primary" @click="dialog=true"><v-icon>chat</v-icon></v-btn>
+                        
+                    </v-col>
+                    <v-col cols="4">
                         <v-btn color="red" @click="$emit('closeModal')"><v-icon>close</v-icon></v-btn>
+                    </v-col>
+                    <v-col cols="4" justify-self="center">
+                        <a href="https://wa.me/584147650847" target="_blank" rel="noopener noreferrer">
+                            <v-img
+                                :src="`${this.$pathImagenes}/Whatsapp_icon.png`"
+                                max-height="64"
+                                max-width="50"
+                            />
+                        </a>
                     </v-col>
                 </v-row>
                 <chat

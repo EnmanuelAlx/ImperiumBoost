@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <link rel="stylesheet" href="{{ asset('css/chat.css') }}"> --}}
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css" rel="stylesheet">
 
 </head>
 <body style="background-image: url({{ asset('imagenes/fondo.png') }});">
@@ -25,7 +25,8 @@
                 {{-- 0 == por pagar
                 1 == esperando por trabajador
                 2 == trabajador asignado
-                -1 == culminado --}}
+                3 == trabajo culminado
+                -1 == cancelado --}}
                 @foreach ($trabajos as $trabajo)
                     <div class="card text-left">
                         <a href="{{ route('chat-admin', $trabajo->id) }}">
@@ -124,6 +125,7 @@
     </div>
     
     <script src="{{ mix("js/app.js") }}"></script>
-    {{-- <script src="{{ asset('voyagerjs/chat.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{{ asset('voyagerjs/chat.js') }}"></script>
 </body>
 </html>

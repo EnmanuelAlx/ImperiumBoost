@@ -4,8 +4,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-        name: 'Zeirt',
-        server: 'la1',
+        name: '',
+        server: '',
         imagen: '',
         email: '',
         version: '',
