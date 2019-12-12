@@ -21089,10 +21089,15 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }
 });
 var audio = new Audio(path);
-window.Echo.channel('notification').listen('.notification', function (e) {
+window.Echo.channel('notification.1').listen('.notification', function (e) {
   console.log(e);
   audio.play();
-  toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success("Te envio un mensaje ".concat(e.message.user.name, " por el servicio ").concat(e.trabajo.servicio.tipo));
+
+  if (e.message.user.name) {
+    toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success("Te envio un mensaje ".concat(e.message.user.name, " por el servicio ").concat(e.trabajo.servicio.tipo));
+  } else {
+    toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success("Te llego un mensaje anonimo");
+  }
 });
 
 /***/ }),

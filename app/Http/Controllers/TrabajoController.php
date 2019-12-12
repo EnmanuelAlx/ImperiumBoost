@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Trabajo;
 use Illuminate\Http\Request;
 
@@ -93,6 +94,21 @@ class TrabajoController extends Controller
         return view('chat', ['trabajos' => $trabajos, 'chatActual' => $chatActual]);
     }
 
+    public function chatTrabajadores(){
+        $trabajadores = User::where('role_id', 3)->get();
+        // $trabajador = User::find(3);
+        // dd($trabajador->trabajosActivos());
+        return view('chatTrabajadores', ['trabajadores' => $trabajadores]);
+    }
+
+    public function chatTrabajador(User $trabajador){
+        $trabajadores = User::where('role_id', 3)->get();
+        $trabajador->trabajos;
+        $trabajador->trabajosActivos();
+        // dd($trabajador->trabajosActivos()->last());
+        return view('chatTrabajadores', ['trabajadores' => $trabajadores, 'traba' => $trabajador]);
+    }
+
     public function marcarPagado(Request $request){
         $trabajo = Trabajo::find($request->id);
         $trabajo->status = 1;
@@ -125,5 +141,14 @@ class TrabajoController extends Controller
             $trabajo->save();
         }
         return response()->json($trabajo, 200);
+    }
+
+    public function cambiarContrasena(Trabajo $trabajo, Request $request){
+        if($request->contraseña){
+            $trabajo->contraseña_cuenta = $request->contraseña;
+            $trabajo->save();
+            return response()->json($trabajo, 200);
+        }
+        return response()->json($trabajo, 500);
     }
 }

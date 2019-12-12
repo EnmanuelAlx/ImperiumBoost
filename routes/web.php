@@ -15,6 +15,9 @@
 Route::get('/messages/{id}', 'MessageController@fetch');
 Route::post('/messages', 'MessageController@sentMessage');
 Route::post('/messages-files', 'MessageController@sentFiles');
+Route::get('/messages/trabajador/{id}', 'MessageController@fetchWorkerMessageToAdmin');
+Route::post('/message-guest', 'MessageController@guestMessageToAdmin');
+
 
 Route::get('/', 'HomeController@home')->name('home')->middleware("guest");
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
@@ -33,20 +36,28 @@ Route::group(['prefix' => 'worker', 'middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/getServicios', 'ServicioController@getServicios');
     Route::post('modifyImage', 'UserController@modifyImage');
     Route::post('changeEmail', 'UserController@changeEmail');
     Route::post('changePassword', 'UserController@changePassword');
     Route::get('getHistorial', "ServicioController@getHistorial");
+    Route::get('/getServicios', 'ServicioController@getServicios');
 });
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
-    Route::get('/chatUsuarios/{trabajo}', 'TrabajoController@chat')->name('chat-admin');
     Route::post('logout', 'HomeController@logout')->name('voyager.logout');
+
     Route::post('marcar-pago', 'TrabajoController@marcarPagado');
     Route::post('asignarTrabajador', 'TrabajoController@asignarTrabajador');
+    Route::post('/cerrarTrabajo/{trabajo}', 'TrabajoController@cerrarTrabajo');
+    Route::post('/cambiarContrasena/{trabajo}', 'TrabajoController@cambiarContrasena');
+    Route::get('/chatUsuarios/{trabajo}', 'TrabajoController@chat')->name('chat-admin');
+    Route::get('/chatTrabajadores', 'TrabajoController@chatTrabajadores')->name('chat-trabajadores');
+    Route::get('/chatTrabajadores/{trabajador}', 'TrabajoController@chatTrabajador')->name('chat-trabajador');
+    
     Route::post('/messages', 'MessageController@sentMessageAdmin');
     Route::post('/messages-files', 'MessageController@sentFilesAdmin');
-    Route::post('/cerrarTrabajo/{trabajo}', 'TrabajoController@cerrarTrabajo');
+    Route::post('/fetchWorkerMessage', 'MessageController@fetchWorkerMessage');
+    Route::post('/messagesToAdmin', 'MessageController@messagesToAdminFromWorker');
+    Route::post('/messages/trabajador', 'MessageController@sentMessageAdminToTrabajador');
 });

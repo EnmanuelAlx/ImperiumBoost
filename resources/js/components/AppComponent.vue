@@ -32,6 +32,7 @@
             </v-list-group>
         <v-list-item-group :color="`${this.$colors.primary}`">
             <route :to="{name: 'historial'}" name="Historial de Servicios" icon="assignment"/>
+            <route :to="{name: 'chat-trabajador'}" name="Chat con el Administrador" icon="chat"/>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -99,7 +100,9 @@
 </template>
 
 <script>
+import toastr from "toastr"
 import route from './Route.vue'
+
   export default {
     components: {
         route,
@@ -118,6 +121,8 @@ import route from './Route.vue'
       pathImagenes: document.head.querySelector('meta[name="imagenes"]').content,
     }),
     created () {
+      const path = '../../sonido/sonido.mp3';
+      let audio = new Audio(path);
       this.$vuetify.theme.dark = true
       this.$store.state.email = this.email;
       this.$store.state.imagen = this.avatar;
@@ -129,6 +134,12 @@ import route from './Route.vue'
             console.log('dentro del my-event-chat uysuario');
             console.log(e);
             this.$store.commit('message', e);
+      });
+      window.Echo.channel('notification.'+this.usuario.id)
+      .listen('.notification', (e) => {
+          console.log(e);
+          audio.play();
+          alert(`Te envio un mensaje el administrador por el servicio ${e.trabajo.servicio.tipo}`)
       });
     },
     methods: {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $table = "mensajes_de_trabajo";
-    protected $fillable = ['message', 'image', 'read' ,'trabajo_id', 'from'];
+    protected $fillable = ['message', 'image', 'read' ,'trabajo_id', 'from', 'trabajador_id'];
 
     public function trabajo()
     {

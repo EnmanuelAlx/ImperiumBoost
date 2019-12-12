@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Message;
 use App\Trabajo;
+use App\MensajeAnonimo;
 use Illuminate\Http\Request;
 use App\Events\MessageSentEvent;
 use App\Events\NotificationEvent;
@@ -32,6 +34,31 @@ class MessageController extends Controller
         }
         return response()->json('No tienes permiso para esto', 500);
     }
+    
+    public function fetchWorkerMessage()
+    {
+        $id = Auth::user();
+        $messages = Message::where('trabajador_id', $id->id)->get();
+        foreach ($messages as $key => $value) {
+            $value->user;
+            $value->read = 1;
+            $value->save();
+        }
+        return response()->json($messages, 200);
+        
+    }
+
+    public function fetchWorkerMessageToAdmin(User $id)
+    {
+        $messages = Message::where('trabajador_id', $id->id)->get();
+        foreach ($messages as $key => $value) {
+            $value->user;
+            $value->read = 1;
+            $value->save();
+        }
+        return response()->json($messages, 200);
+        
+    }
 
     public function sentMessage(Request $request)
     {
@@ -47,7 +74,7 @@ class MessageController extends Controller
         $message->trabajo->usuario;
         $message->user;
         event(new MessageSentEvent($user, $message, $message->trabajo->id));
-        event(new NotificationEvent($user, $message, $message->trabajo));
+        event(new NotificationEvent($user, $message, $message->trabajo, 1));
         
         return response()->json($message, 200);
     }
@@ -63,8 +90,10 @@ class MessageController extends Controller
         ]);
         $message->trabajo;
         $message->trabajo->usuario;
+        $message->trabajo->servicio;
         $message->user;
         event(new MessageSentEvent($user, $message, $message->trabajo->usuario->id));
+        event(new NotificationEvent($user, $message, $message->trabajo, $message->trabajo->usuario->id));
         return response()->json($message, 200);
     }
 
@@ -99,6 +128,40 @@ class MessageController extends Controller
         return response()->json($message, 200);
     }
 
+    public function sentMessageAdminToTrabajador(Request $request){
+        $user = Auth::user();
+        $message = Message::create([
+            'message' => $request->message,
+            'from' => $user->id,
+            'trabajador_id' => $request->usuario['id']
+        ]);
+        $message->trabajo;
+        $message->user;
+        event(new MessageSentEvent($user, $message, $message->trabajador_id));
+        event(new NotificationEvent($user, $message, $message, $message->trabajador_id));
+        return response()->json($message, 200);
+    }
 
+
+    public function messagesToAdminFromWorker(Request $request){
+        $user = Auth::user();
+        $message = Message::create([
+            'message' => $request->message,
+            'from' => $user->id,
+            'trabajador_id' => $user->id
+        ]);
+        $message->user;
+        event(new MessageSentEvent($user, $message, $user->id));
+        event(new NotificationEvent($user, $message, $message->trabajo, 1));
+        return response()->json($message, 200);
+    }
+
+    public function guestMessageToAdmin(Request $request){
+        // dd($request->all());
+        $message = MensajeAnonimo::create($request->all());
+        event(new NotificationEvent($request->name, $message, '', 1));
+        return response()->json($message, 200);
+
+    }
     
 }

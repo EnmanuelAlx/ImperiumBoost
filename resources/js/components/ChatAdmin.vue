@@ -47,7 +47,9 @@
                         outlined
                         v-model="mensaje"
                         append-icon="send"
-                        @keyup.enter="sent"
+                        @keyup.enter="send"
+                        @click:append="send"
+
                     />
                 </div>
                 <div class="col-md-1">
@@ -58,10 +60,18 @@
                 </div>
             </div>
             <div class="row">
-                <button class="btn btn-success" v-if="trabajo.status == 0" @click="marcarPagado">Marcar como pagado</button> 
-                <button class="btn btn-info" @click="dialog = true" v-else-if="trabajo.status == 1 || trabajo.status == 2">Asignar o cambiar Trabajador</button>
-                <v-spacer></v-spacer>
-                <button class="btn btn-danger" @click="dialogCerrarTrabajo = true">Cerrar trabajo</button>
+                <div class="col-md-4"  v-if="trabajo.status == 0">
+                    <button class="btn btn-success" @click="marcarPagado">Marcar como pagado</button> 
+                </div>
+                <div class="col-md-4" v-else-if="trabajo.status == 1 || trabajo.status == 2">
+                    <button class="btn btn-info" @click="dialog = true" >Asignar o cambiar Trabajador</button>
+                </div>
+                <div class="col-md-4" v-if="trabajo.status == 1 || trabajo.status == 2">
+                    <button class="btn btn-info" @click="dialogCambiarContraseña = true">Agregar o cambiar Contraseña de la cuenta</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-danger" @click="dialogCerrarTrabajo = true">Cerrar trabajo</button>
+                </div>
             </div>
         </div>
 
@@ -98,6 +108,35 @@
                     <v-row>
                         <v-col>
                             <v-btn color="warning" @click="cerrarTrabajo">Enviar</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+        
+        <v-dialog
+            v-model="dialogCambiarContraseña"
+            max-width="500"
+        >
+            <v-card>
+                <v-card-title primary-title>
+                    <div>
+                        <h3 class="headline mb-0">Agregar o cambiar contraseña de la cuenta {{ trabajo.cuenta }}</h3>
+                    </div>
+                </v-card-title>
+                <v-card-text class="text-center">
+                    <v-row>
+                        <v-col>
+                            <v-text-field
+                                v-model="contraseña"
+                                label="Inserte contraseña"
+                                outlined
+                            />
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-btn color="success" @click="cambiarContrasena">Cambiar contraseña</v-btn>
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -193,6 +232,7 @@
                                     Asignar trabajador
                                 </button>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -231,6 +271,8 @@
                 dialogCerrarTrabajo: false,
                 btnCancelar: 1,
                 notaCancelacion: '',
+                dialogCambiarContraseña: false,
+                contraseña: this.trabajo.contraseña_cuenta
             }
         },
         beforeDestroy(){
@@ -255,7 +297,7 @@
             });
         },
         methods: {
-            sent () {
+            send () {
                 axios.post('/admin/messages', {
                     'message' : this.mensaje,
                     'trabajo' : this.trabajo
@@ -325,11 +367,21 @@
                     console.error(err); 
                 })
             },
+            cambiarContrasena(){
+                let params = {
+                    'contraseña': this.contraseña  
+                };
+                console.log('hey')
+                axios.post(`/admin/cambiarContrasena/${this.trabajo.id}`,params)
+                .then(res => {
+                    this.contraseña = res.data.contraseña_cuenta;
+                    this.dialogCambiarContraseña = false;
+                })
+                .catch(err => {
+                    alert('Introduce una contraseña');
+                })
+            },
         },
 
     }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

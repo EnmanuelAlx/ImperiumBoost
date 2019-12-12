@@ -15,7 +15,6 @@ Broadcast::channel('chat.{seder}', function ($user, $seder) {
     return true;
 });
 
-
-Broadcast::channel('notification', function ($user) {
+Broadcast::channel('notification.{usuario}', function ($user, $usuario) {
     return true;
 });

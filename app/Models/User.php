@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Message;
+use App\Trabajo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,5 +50,17 @@ class User extends \TCG\Voyager\Models\User
     public function message()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function servicios(){
+        return $this->hasMany(Trabajo::class, 'user_id', 'id');
+    }
+
+    public function trabajos(){
+        return $this->hasMany(Trabajo::class, 'trabajador_id', 'id');
+    }
+
+    public function trabajosActivos(){
+        return Trabajo::where('status', '!=', -1)->where('status', '!=', 3)->where('trabajador_id', $this->id)->get();
     }
 }

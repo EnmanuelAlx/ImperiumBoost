@@ -18,9 +18,13 @@ window.Echo = new Echo({
 });
 
 let audio = new Audio(path);
-window.Echo.channel('notification')
+window.Echo.channel('notification.1')
 .listen('.notification', (e) => {
     console.log(e);
     audio.play();
-    toastr.success(`Te envio un mensaje ${e.message.user.name} por el servicio ${e.trabajo.servicio.tipo}`);
+    if(e.message.user.name){
+        toastr.success(`Te envio un mensaje ${e.message.user.name} por el servicio ${e.trabajo.servicio.tipo}`);
+    }else{
+        toastr.success(`Te llego un mensaje anonimo`);
+    }
 });

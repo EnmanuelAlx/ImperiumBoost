@@ -22,6 +22,8 @@ Vue.use(Vuetify)
 Vue.component('home', require('./views/Home').default);
 Vue.component('app-usuario', require('./components/AppComponent.vue').default);
 Vue.component('chatAdmin', require('./components/ChatAdmin.vue').default);
+Vue.component('chatTrabajadorAdmin', require('./components/ChatTrabajadorAdmin.vue').default);
+Vue.component('PublicChat', require('./components/PublicChat.vue').default);
 
 Vue.prototype.$pathImagenes = "http://localhost:8000/imagenes"
 Vue.prototype.$colors = {

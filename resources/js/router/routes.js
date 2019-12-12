@@ -59,6 +59,11 @@ export default new Router({
             name: 'historial',
             component: require('../views/Historial').default,
         },
+        {
+            path: '/chat-trabajador',
+            name: 'chat-trabajador',
+            component: require('../views/ChatTrabajador').default,
+        },
 
     ]
 });

@@ -1,19 +1,19 @@
 <template>
     <v-row>
-        <v-dialog
-            v-model="dialog"
-            fullscreen hide-overlay transition="dialog-bottom-transition"
-        >
-            <v-card>
+        <v-col cols="12">
+            <v-card min-height="800">
                 <v-toolbar dark color="primary">
-                    <v-btn icon dark @click="$emit('closeChat')">
-                        <v-icon>close</v-icon>
-                    </v-btn>
                     <v-toolbar-title>Chat con el Administrador</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <a href="https://wa.me/584147650847" target="_blank" rel="noopener noreferrer">
+                        <v-img
+                            :src="`${this.$pathImagenes}/Whatsapp_icon.png`"
+                            max-height="64"
+                            max-width="50"
+                        />
+                    </a>
                 </v-toolbar>
-
                 <v-card-text style="overflow-y: auto; max-height: 550px;">
-                    
                         <div v-for="mensaje in messages" :key="mensaje.id">
                             <div class="text-left" v-if="mensaje.user.role_id != '1'" style="margin: 10px">
                                 <!-- <p class="card-text">{{ mensaje.user.name }}: {{ mensaje.message }} </p> -->
@@ -51,51 +51,34 @@
                 </v-card-text>
             
                 <v-card-actions>
-                    <v-row class="text-center">
-                        <v-col cols="11" align-self="center">
-                            <v-text-field
-                                v-model="message"
-                                outlined
-                                append-icon="send"
-                                @keyup.enter="send"
-                                @click:append="send"
+                    <v-container>
+                        <v-row class="text-center">
+                            <v-col cols="12" align-self="center">
+                                <v-text-field
+                                    v-model="message"
+                                    outlined
+                                    append-icon="send"
+                                    @keyup.enter="send"
+                                    @click:append="send"
 
-                            />
-                        </v-col>
-                        <v-col cols="1">
-                            <v-file-input
-                                v-model="archivo"
-                                @change="onDrop"
-                            />
-                        </v-col>
-                    </v-row>
+                                />
+                            </v-col>
+                        </v-row>
+                    </v-container>
                 </v-card-actions>
             </v-card>
-        </v-dialog>
+        </v-col>
     </v-row>
 </template>
 
 <script>
     export default {
-        name:'chat',
-        props: {
-            dialog: {
-                type: Boolean,
-                default: false,
-            },
-            trabajo:{
-                type: Object
-            },
-            user:{
-                type: String
-            }
-        },
+        name:'chatTrabajador',
         data() {
             return {
                 messages: [],
                 message: '',
                 subscribe: '',
-                archivo: null,
             }
         },
         beforeDestroy(){
@@ -111,34 +94,25 @@
         },
         methods: {
             send () {
-                axios.post('/messages', {
+                axios.post('/admin/messagesToAdmin', {
                     'message' : this.message,
-                    'trabajo' : this.trabajo
                 })
                 .then(res => {
-                    this.messages.push(res.data);                    
+                    // this.messages.push(res.data);                    
                     this.message = ''
                 });
             },
             fetchMessages() {
-                axios.get(`/messages/${this.trabajo.id}`)
+                axios.post(`/admin/fetchWorkerMessage`)
                 .then(res => {
                     console.log(res.data);
                     this.messages = res.data
                 })
             },
-            onDrop(){
-                const fd = new FormData();
-                fd.append('files', this.archivo)
-                fd.append('trabajo', this.trabajo.id);
-                axios.post('/messages-files',fd)
-                .then(res => {
-                    // this.messages.push(res.data);                    
-                    // this.message = ''
-                });
-                  // Can get access to things like file name and size
-            }
         }
     }
 </script>
 
+<style lang="scss" scoped>
+
+</style>

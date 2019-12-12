@@ -12,7 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css" rel="stylesheet">
 
 </head>
-<body style="background-image: url({{ asset('imagenes/fondo.png') }});">
+<body style="background-image: url({{ asset('imagenes/fondo.png') }}); background-repeat: repeat;">
     <div id="app" class="container-fluid">
         <div class="row">
             <div class="col-md-3 overflow-auto">

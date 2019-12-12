@@ -16,16 +16,18 @@ class NotificationEvent implements ShouldBroadcast
     public $message;
     public $user;
     public $trabajo;
+    public $to;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user, $message, $trabajo)
+    public function __construct($user, $message, $trabajo, $to)
     {
         $this->user = $user;
         $this->message = $message;
         $this->trabajo = $trabajo;
+        $this->to = $to;
     }
 
     /**
@@ -35,7 +37,7 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notification');
+        return new Channel('notification.'.$this->to);
     }
 
     public function broadcastAs()

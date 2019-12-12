@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->string('image')->nullable();
             $table->boolean('read')->default(false);
             $table->string('from')->nullable();
-            $table->bigInteger('trabajo_id')->unsigned();
+            $table->bigInteger('trabajo_id')->unsigned()->nullable();
             $table->foreign('trabajo_id')->references('id')->on('trabajos');
             $table->timestamps();
         });
