@@ -32,7 +32,7 @@
             </v-list-group>
         <v-list-item-group :color="`${this.$colors.primary}`">
             <route :to="{name: 'historial'}" name="Historial de Servicios" icon="assignment"/>
-            <route :to="{name: 'chat-trabajador'}" name="Chat con el Administrador" icon="chat"/>
+            <route :to="{name: 'chat-trabajador'}" name="Chat con el Administrador" icon="chat" v-if="role_id != 2"/>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

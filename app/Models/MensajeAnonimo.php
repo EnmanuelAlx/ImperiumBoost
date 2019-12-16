@@ -10,6 +10,7 @@ class MensajeAnonimo extends Model
     protected $fillable = [
         'email',
         'name',
-        'mensaje'
+        'mensaje',
+        'admin'
     ];
 }

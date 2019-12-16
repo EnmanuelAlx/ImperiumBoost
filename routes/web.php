@@ -16,6 +16,7 @@ Route::get('/messages/{id}', 'MessageController@fetch');
 Route::post('/messages', 'MessageController@sentMessage');
 Route::post('/messages-files', 'MessageController@sentFiles');
 Route::get('/messages/trabajador/{id}', 'MessageController@fetchWorkerMessageToAdmin');
+Route::get('/messages/anonimos/{email}', 'MessageController@fetchAnonimusMessageToAdmin');
 Route::post('/message-guest', 'MessageController@guestMessageToAdmin');
 
 
@@ -52,12 +53,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/cerrarTrabajo/{trabajo}', 'TrabajoController@cerrarTrabajo');
     Route::post('/cambiarContrasena/{trabajo}', 'TrabajoController@cambiarContrasena');
     Route::get('/chatUsuarios/{trabajo}', 'TrabajoController@chat')->name('chat-admin');
+    Route::get('/chatAnonimos', 'TrabajoController@chatAnonimos')->name('chat-anonimos');
+    Route::get('/chatAnonimos/{anonimo}', 'TrabajoController@chatAnonimo')->name('chat-anonimos');
     Route::get('/chatTrabajadores', 'TrabajoController@chatTrabajadores')->name('chat-trabajadores');
     Route::get('/chatTrabajadores/{trabajador}', 'TrabajoController@chatTrabajador')->name('chat-trabajador');
     
     Route::post('/messages', 'MessageController@sentMessageAdmin');
     Route::post('/messages-files', 'MessageController@sentFilesAdmin');
+    Route::get('/getChatsAnonimos', 'MessageController@getChatsAnonimos');
     Route::post('/fetchWorkerMessage', 'MessageController@fetchWorkerMessage');
     Route::post('/messagesToAdmin', 'MessageController@messagesToAdminFromWorker');
     Route::post('/messages/trabajador', 'MessageController@sentMessageAdminToTrabajador');
+    Route::post('/messages/anonimo', 'MessageController@sentMessageAdminToAnonimo');
 });

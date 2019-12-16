@@ -24,6 +24,8 @@ Vue.component('app-usuario', require('./components/AppComponent.vue').default);
 Vue.component('chatAdmin', require('./components/ChatAdmin.vue').default);
 Vue.component('chatTrabajadorAdmin', require('./components/ChatTrabajadorAdmin.vue').default);
 Vue.component('PublicChat', require('./components/PublicChat.vue').default);
+Vue.component('ListaChats', require('./components/ListaChats.vue').default);
+Vue.component('chatAnonimoAdmin', require('./components/ChatAnonimosAdmin.vue').default);
 
 Vue.prototype.$pathImagenes = "http://localhost:8000/imagenes"
 Vue.prototype.$colors = {

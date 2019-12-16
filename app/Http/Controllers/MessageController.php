@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Events\MessageSentEvent;
 use App\Events\NotificationEvent;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 class MessageController extends Controller
 {
@@ -19,6 +20,12 @@ class MessageController extends Controller
 
     public function index(){
         return view('Application.chat');
+    }
+
+    public function getChatsAnonimos(){
+        $anonimos = MensajeAnonimo::all()->groupBy('email');
+        // $anonimos_collection = collect($anonimos);
+        return response()->json($anonimos, 200);
     }
 
     public function fetch(Trabajo $id)
@@ -57,7 +64,11 @@ class MessageController extends Controller
             $value->save();
         }
         return response()->json($messages, 200);
-        
+    }
+
+    public function fetchAnonimusMessageToAdmin($email){
+        $anonimos = MensajeAnonimo::where('email', $email)->get();
+        return response()->json($anonimos, 200);
     }
 
     public function sentMessage(Request $request)
@@ -161,7 +172,16 @@ class MessageController extends Controller
         $message = MensajeAnonimo::create($request->all());
         event(new NotificationEvent($request->name, $message, '', 1));
         return response()->json($message, 200);
+    }
 
+    public function sentMessageAdminToAnonimo(Request $request){
+        $mensaje = MensajeAnonimo::create([
+            'email' => $request->email,
+            'mensaje' => $request->message,
+            'name' => Auth::user()->name,
+            'admin' => 1,
+        ]);
+        return response()->json($mensaje, 200);
     }
     
 }

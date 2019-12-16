@@ -25,6 +25,7 @@
                                 <v-row>
                                     <v-col cols="12">
                                         <h3>Chat con el administrador</h3>
+                                        <button @click="fetchMessages">hasd</button>
                                     </v-col>
                                 </v-row>
                                 <v-row>
@@ -46,10 +47,10 @@
                            </v-content>
                         </v-card-title>
                         <v-divider></v-divider>
-                        <v-card-text>
+                        <v-card-text style="overflow-y: auto; max-height: 450px;">
                     
                             <div v-for="mensaje in mensajes" :key="mensaje.id">
-                                <div class="text-left" v-if="mensaje.email == 'admin@gmail.com'" style="margin: 10px">
+                                <div class="text-left" v-if="mensaje.admin != '1'" style="margin: 10px">
                                     <!-- <p class="card-text">{{ mensaje.user.name }}: {{ mensaje.message }} </p> -->
                                     <v-chip
                                         class="ma-2 text-white"
@@ -111,7 +112,9 @@
             }
         },
         created () {
-            
+            // setInterval(() => {
+                this.fetchMessages();
+            // }, 1000);
         },
         methods: {
             send() {
@@ -132,7 +135,13 @@
                     this.mensajes.push(res.data);                    
                     this.message = ''
                 });
-            }
+            },
+            fetchMessages() {
+                axios.get(`/messages/anonimos/${this.email}`)
+                .then(res => {
+                    this.mensajes = res.data
+                })
+            },
         },
     }
 </script>

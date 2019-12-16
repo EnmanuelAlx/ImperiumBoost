@@ -27,39 +27,14 @@
                 2 == trabajador asignado
                 3 == trabajo culminado
                 -1 == cancelado --}}
-                @foreach ($trabajadores as $trabajador)
-                    <div class="card text-left">
-                        <a href="{{ route('chat-trabajador', $trabajador->id) }}">
-                            <div class="card-body">
-                                <h4 class="card-title">Nombre: {{ $trabajador->name }}</h4>
-                                <p class="card-text">
-                                    <span> Email: {{ $trabajador->email}} </span><br>
-                                    <span>Cantidad de trabajos activos {{ $trabajador->trabajosActivos()->count() }}</span><br>
-                                    <span class="badge badge-danger">Kda: {{ $trabajador->kda }}</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
+                <lista-chats></lista-chats>
             </div>
-            <div class="col-md-6">
-                @isset($traba)
-                    <chat-trabajador-admin
-                        :usuario="{{ $traba }}"
+            <div class="col-md-9">
+                @isset($chatAnonimo)
+                    <chat-anonimo-admin
+                        :usuario="'{{ $chatAnonimo }}'"
                     >
-                    </chat-trabajador-admin>
-                @endisset
-            </div>
-            <div class="col-md-3">
-                @isset($traba)
-                    <div class="card text-left">
-                            <div class="card-header text-white" style="background-color: #3F3F3F;">
-                                <h4>Informacion del servicio</h4>
-                            </div>
-                            <div class="card-body">
-                               
-                            </div>
-                        </div>
+                    </chat-anonimo-admin>
                 @endisset
             </div>
         </div>

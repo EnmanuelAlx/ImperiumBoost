@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Trabajo;
+use App\MensajeAnonimo;
 use Illuminate\Http\Request;
 
 class TrabajoController extends Controller
@@ -101,6 +102,17 @@ class TrabajoController extends Controller
         return view('chatTrabajadores', ['trabajadores' => $trabajadores]);
     }
 
+    public function chatAnonimos(){
+        // $anonimos = MensajeAnonimo::all()->groupBy('email');
+        return view('chatAnonimos');
+    }
+
+    public function chatAnonimo($email){
+        return view('chatAnonimos', ['chatAnonimo' => $email]);
+    }
+
+
+
     public function chatTrabajador(User $trabajador){
         $trabajadores = User::where('role_id', 3)->get();
         $trabajador->trabajos;
@@ -151,4 +163,5 @@ class TrabajoController extends Controller
         }
         return response()->json($trabajo, 500);
     }
+
 }
