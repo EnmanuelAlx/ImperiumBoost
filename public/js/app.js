@@ -2504,28 +2504,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    // setInterval(() => {
-    this.fetchMessages(); // }, 1000);
+    var _this = this;
+
+    setInterval(function () {
+      _this.fetchMessages();
+    }, 1000);
   },
   methods: {
     send: function send() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post('/admin/messages/anonimo', {
         'message': this.mensaje,
         'email': this.usuario
       }).then(function (res) {
-        _this.mensajes.push(res.data);
+        _this2.mensajes.push(res.data);
 
-        _this.mensaje = '';
+        _this2.mensaje = '';
       });
     },
     fetchMessages: function fetchMessages() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/messages/anonimos/".concat(this.usuario)).then(function (res) {
         console.log(res.data);
-        _this2.mensajes = res.data;
+        _this3.mensajes = res.data;
       });
     }
   }
@@ -2930,21 +2933,35 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    // setInterval(() => {
-    this.getChats(); // }, 10000);;
+    var _this = this;
+
+    setInterval(function () {
+      _this.getChats();
+    }, 3000);
   },
   methods: {
     getChats: function getChats() {
-      var _this = this;
+      var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/admin/getChatsAnonimos').then(function (res) {
         console.log(res.data);
-        _this.chats_anonimos = res.data;
+        _this2.chats_anonimos = res.data;
       })["catch"](function (err) {
         console.error(err);
       });
     },
-    eliminarConversacion: function eliminarConversacion(email) {//Eliminar la conversacion por que ya acabo 
+    eliminarConversacion: function eliminarConversacion(email) {
+      var _this3 = this;
+
+      //Eliminar la conversacion por que ya acabo 
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/admin/eliminarConversacionAnonima', {
+        email: email
+      }).then(function (res) {
+        console.log(res.data);
+        _this3.chats_anonimos = res.data;
+      })["catch"](function (err) {
+        console.error(err);
+      });
     }
   }
 });
@@ -3584,12 +3601,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    // setInterval(() => {
-    this.fetchMessages(); // }, 1000);
+    var _this = this;
+
+    setInterval(function () {
+      _this.fetchMessages();
+    }, 1000);
   },
   methods: {
     send: function send() {
-      var _this = this;
+      var _this2 = this;
 
       if (!this.email) {
         alert('Ingrese un correo para identificarse');
@@ -3607,16 +3627,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         console.log(res.data);
 
-        _this.mensajes.push(res.data);
+        _this2.mensajes.push(res.data);
 
-        _this.message = '';
+        _this2.message = '';
       });
     },
     fetchMessages: function fetchMessages() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/messages/anonimos/".concat(this.email)).then(function (res) {
-        _this2.mensajes = res.data;
+        _this3.mensajes = res.data;
       });
     }
   }
@@ -46932,6 +46952,7 @@ var render = function() {
                   staticClass: "btn btn-danger",
                   on: {
                     click: function($event) {
+                      $event.preventDefault()
                       return _vm.eliminarConversacion(chat[0].email)
                     }
                   }

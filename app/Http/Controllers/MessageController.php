@@ -184,4 +184,11 @@ class MessageController extends Controller
         return response()->json($mensaje, 200);
     }
     
+    public function eliminarConversacionAnonima(Request $request){
+        MensajeAnonimo::where('email', $request->email)->delete();
+        $anonimos = MensajeAnonimo::all()->groupBy('email');
+        return response()->json($anonimos, 200);
+    }
+
+
 }

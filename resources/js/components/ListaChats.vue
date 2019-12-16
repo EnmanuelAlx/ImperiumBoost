@@ -4,7 +4,7 @@
             <a :href="`/admin/chatAnonimos/${chat[0].email}`">
                 <div class="card-body">
                     <h4 class="card-title">Nombre: {{ chat[0].name }}  
-                        <button class="btn btn-danger" @click="eliminarConversacion(chat[0].email)">
+                        <button class="btn btn-danger" @click.prevent="eliminarConversacion(chat[0].email)">
                             Eliminar
                         </button>
                     </h4>
@@ -27,9 +27,9 @@ import axios from 'axios'
             }
         },
         created () {
-            // setInterval(() => {
+            setInterval(() => {
                 this.getChats();
-            // }, 10000);;
+            }, 3000);
         },
         methods: {
             getChats() {
@@ -44,6 +44,16 @@ import axios from 'axios'
             },
             eliminarConversacion(email){
                 //Eliminar la conversacion por que ya acabo 
+                axios.post('/admin/eliminarConversacionAnonima',{
+                    email
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.chats_anonimos = res.data
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
             }
         },
     }

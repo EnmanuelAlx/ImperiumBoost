@@ -67,9 +67,9 @@
             }
         },
         mounted () {
-            // setInterval(() => {
+            setInterval(() => {
                 this.fetchMessages();
-            // }, 1000);
+            }, 1000);
         },
         methods: {
             send () {

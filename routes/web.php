@@ -58,11 +58,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/chatTrabajadores', 'TrabajoController@chatTrabajadores')->name('chat-trabajadores');
     Route::get('/chatTrabajadores/{trabajador}', 'TrabajoController@chatTrabajador')->name('chat-trabajador');
     
+    
     Route::post('/messages', 'MessageController@sentMessageAdmin');
     Route::post('/messages-files', 'MessageController@sentFilesAdmin');
     Route::get('/getChatsAnonimos', 'MessageController@getChatsAnonimos');
     Route::post('/fetchWorkerMessage', 'MessageController@fetchWorkerMessage');
     Route::post('/messagesToAdmin', 'MessageController@messagesToAdminFromWorker');
-    Route::post('/messages/trabajador', 'MessageController@sentMessageAdminToTrabajador');
     Route::post('/messages/anonimo', 'MessageController@sentMessageAdminToAnonimo');
+    Route::post('/messages/trabajador', 'MessageController@sentMessageAdminToTrabajador');
+    Route::post('/eliminarConversacionAnonima', 'MessageController@eliminarConversacionAnonima');
 });
