@@ -7,6 +7,7 @@ use App\Cuenta;
 use App\Trabajo;
 use App\Producto;
 use App\Servicio;
+use App\CuentasCompradas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -154,6 +155,9 @@ class ServicioController extends Controller
                 break;
             case 6:
                 $status = $this->positioningGamesService($request->all());
+                break;
+            case 7:
+                $status = $this->buyAccount($request->all());
                 break;
             default:
                 # code...
@@ -533,6 +537,19 @@ EOT;
             }
             return response()->json($trabajos, 200);
         }
+    }
+
+    public function buyAccount($data){
+        $cuenta = Cuenta::find($data['info']['cuenta']);
+        $cuenta->vendido = 1; 
+        $cuenta->save();
+        CuentasCompradas::create([
+            'cuenta_id' => $cuenta->id,
+            'metodo_id' => $data['payment_method'],
+            'precio' => $cuenta->precio,
+            'user' => Auth::user()->id,
+        ]);
+        return 200;
     }
 
 }

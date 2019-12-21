@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Saldo;
 use App\Trabajo;
 use App\MensajeAnonimo;
 use Illuminate\Http\Request;
@@ -142,7 +143,14 @@ class TrabajoController extends Controller
 
     public function cerrarTrabajo(Trabajo $trabajo, Request $request){
         if($request->opcion == 1){
-            //Se culmino el trabajo
+            if($trabajo->servicio_id == 1){
+                $this->calcularKda($trabajo, $request);
+            }
+            Saldo::create([
+                'saldo' => ($trabajo->porcentaje_trabajador / 100) * $trabajo->monto ,
+                'user_id' => $trabajo->trabajador_id,
+                'trabajo_id' => $trabajo->id,
+            ]);
             $trabajo->status = 3;
             $trabajo->save();
         }
@@ -164,4 +172,13 @@ class TrabajoController extends Controller
         return response()->json($trabajo, 500);
     }
 
+    public function calcularKda($trabajo, $request){
+        $trabajo->trabajador->puntos += $request->puntos;
+        $trabajo->trabajador->save();
+        return;
+    }
+    //Divisiones de plata para abajo, factor 1 
+    //Oro factor 1.5
+    //Platino 2
+    //diamante 3
 }

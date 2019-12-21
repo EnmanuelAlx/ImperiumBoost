@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "laravel-echo": "^1.6.0",
+        "moment": "^2.24.0",
         "pusher-js": "^5.0.2",
         "toastr": "^2.1.4",
         "vue-full-screen-file-drop": "^2.0.0",

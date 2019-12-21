@@ -226,8 +226,8 @@ import Cupon from "./Cupon"
             },
             pagar(){
                 let URL = '/user/pay'
-                console.log(this.$store.state.name);
-                if(this.$store.state.name == ''){
+                console.log(this.info.servicio);
+                if(this.info.servicio.id != 7 && this.$store.state.name == ''){
                     alert('Debe introducir nombre y servidor')
                     return;
                 }

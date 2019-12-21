@@ -45,8 +45,8 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
     Route::post('logout', 'HomeController@logout')->name('voyager.logout');
+    Voyager::routes();
 
     Route::post('marcar-pago', 'TrabajoController@marcarPagado');
     Route::post('asignarTrabajador', 'TrabajoController@asignarTrabajador');

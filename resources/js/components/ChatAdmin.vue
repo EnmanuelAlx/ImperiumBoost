@@ -96,6 +96,24 @@
                             </v-col>
                         </v-btn-toggle>
                     </v-row>
+                    <v-row v-if="btnCancelar == 1 && trabajo.servicio.id == 1"> 
+                        <v-col>
+                            <span v-html="diasTardados"></span>
+                            <v-text-field
+                                outlined
+                                label="Partidas por dia"
+                                v-model="partidas_x_dia"
+                                @change="calcularPuntos"
+                            ></v-text-field>
+                            <v-text-field
+                                outlined
+                                label="Factor de dificultad"
+                                v-model="factor"
+                                @change="calcularPuntos"
+                            ></v-text-field>
+                            <span>Cantidad de puntos: {{ puntos }}</span>
+                        </v-col>
+                    </v-row>
                     <v-row v-if="btnCancelar == 2">
                         <v-col>
                             <v-text-field
@@ -244,6 +262,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+import { parse } from 'path';
     export default {
         props: {
             usuario:{
@@ -269,10 +289,23 @@
                 fecha_culminacion_trabajo: (this.trabajo.fecha_culminacion_trabajo) ? this.trabajo.fecha_culminacion_trabajo : new Date().toISOString().substr(0, 10),
                 porcentaje_trabajador: (this.trabajo.porcentaje_trabajador) ? this.trabajo.porcentaje_trabajador : 50.0,
                 dialogCerrarTrabajo: false,
-                btnCancelar: 1,
+                btnCancelar: 0,
                 notaCancelacion: '',
                 dialogCambiarContraseña: false,
-                contraseña: this.trabajo.contraseña_cuenta
+                contraseña: this.trabajo.contraseña_cuenta,
+                partidas_x_dia: 1,
+                puntos: 1,
+                tiempo_de_culminacion: 0,
+                factor: 1,
+            }
+        },
+        computed: {
+            diasTardados() {
+                let fecha_trabajo = moment(this.trabajo.fecha_asignacion_trabajador);
+                let fecha_actual = moment();
+                this.tiempo_de_culminacion = fecha_actual.diff(fecha_trabajo, 'days');
+                this.puntos = this.tiempo_de_culminacion; 
+                return `Culmino el trabajo en ${this.tiempo_de_culminacion} dias`;
             }
         },
         beforeDestroy(){
@@ -357,7 +390,8 @@
             cerrarTrabajo(){
                 let params = {
                     'opcion': this.btnCancelar,
-                    'nota' :  this.notaCancelacion
+                    'nota' :  this.notaCancelacion,
+                    'puntos' : this.puntos,
                 }
                 axios.post(`/admin/cerrarTrabajo/${this.trabajo.id}`, params)
                 .then(res => {
@@ -381,6 +415,12 @@
                     alert('Introduce una contraseña');
                 })
             },
+            calcularPuntos(){
+                this.puntos = 0;
+                if(this.partidas_x_dia != 0 && this.factor != 0){
+                    this.puntos = this.tiempo_de_culminacion * parseFloat(this.partidas_x_dia) * parseFloat(this.factor);
+                }
+            }
         },
 
     }

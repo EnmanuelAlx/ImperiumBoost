@@ -65,6 +65,7 @@
                 this.loading = true;
                 axios.get(URL).then(res=>{
                     this.loading = false;
+                    this.$emit('showComponent', cuenta)
                 }).catch(err=>{
                     this.loading = false;
                 })

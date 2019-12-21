@@ -5,7 +5,7 @@
                 <v-menu
                     v-model="menu"
                     :close-on-content-click="false"
-                    :nudge-width="200"
+                    :nudge-width="300"
                     offset-x
                     transition="slide-x-transition"
                 >
@@ -22,12 +22,20 @@
                     <v-card shaped>
                         <v-card-title>
                            <v-content>
-                                <v-row>
-                                    <v-col cols="12">
-                                        <h3>Chat con el administrador</h3>
-                                        <button @click="fetchMessages">hasd</button>
-                                    </v-col>
-                                </v-row>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h3>Chat con el Administrador</h3>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="https://wa.me/584147650847" target="_blank" rel="noopener noreferrer">
+                                                <v-img
+                                                    :src="`${this.$pathImagenes}/Whatsapp_icon.png`"
+                                                    max-height="64"
+                                                    max-width="50"
+                                                />
+                                            </a>
+                                    </div>
+                                </div>
                                 <v-row>
                                     <v-col cols="12">
                                         <v-text-field

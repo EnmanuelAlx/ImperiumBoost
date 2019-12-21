@@ -13,6 +13,7 @@ class HomeController extends Controller
     }
     
     public function logout(){
+        dd('hola');
         app('VoyagerAuth')->logout();
         return redirect()->route('home');
     }
