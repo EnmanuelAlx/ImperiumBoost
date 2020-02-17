@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Saldo;
 use Illuminate\Http\Request;
 
@@ -81,5 +82,15 @@ class SaldoController extends Controller
     public function destroy(Saldo $saldo)
     {
         //
+    }
+
+
+    public function saldoTrabajador(Request $request){
+        $saldos = Saldo::where('user_id', $request->id)->where('cobrado', 0)->get();
+        $total = 0;
+        foreach ($saldos as $saldo) {
+            $total += $saldo->saldo;
+        }
+        return response()->json($total, 200);
     }
 }

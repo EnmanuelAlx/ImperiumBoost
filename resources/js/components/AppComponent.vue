@@ -53,6 +53,7 @@
             <v-avatar
               size="40"
             >
+                
                 <v-img :src="$store.state.imagen" alt="alt"/>
             </v-avatar>
           </v-btn>
@@ -67,6 +68,16 @@
               <v-list-item-content>
                   <v-list-item-title>
                       Cerrar sesion
+                  </v-list-item-title>
+              </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="role_id == 3" :link="true">
+              <v-list-item-action>
+                  <v-icon>attach_money</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                  <v-list-item-title>
+                      Saldo Total: {{ saldo }}
                   </v-list-item-title>
               </v-list-item-content>
           </v-list-item>
@@ -118,6 +129,7 @@ import route from './Route.vue'
     },
     data: () => ({
       drawer: null,
+      saldo: 0,
       pathImagenes: document.head.querySelector('meta[name="imagenes"]').content,
     }),
     created () {
@@ -165,6 +177,16 @@ import route from './Route.vue'
         })
         .catch(err=>{
           this.$store.state.tasa = 1
+        })
+      },
+      getSaldo() {
+        axios.post('/worker/saldoTrabajador',this.usuario)
+        .then(res => {
+          console.log(res.data);
+          return res.data
+        })
+        .catch(err => {
+          return 0;
         })
       }
     },

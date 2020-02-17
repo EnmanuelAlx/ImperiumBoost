@@ -33,7 +33,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'worker', 'middleware' => 'auth'], function () {
-    Route::get('dashboard', 'HomeController@workerDashboard')->name('worker.dashboard');     
+    Route::get('dashboard', 'HomeController@workerDashboard')->name('worker.dashboard');
+    Route::post('/saldoTrabajador', 'SaldoController@saldoTrabajador'); 
 });
 
 Route::group(['middleware' => ['auth']], function () {

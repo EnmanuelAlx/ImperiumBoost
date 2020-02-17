@@ -15,6 +15,7 @@ class AddTrabajoToSaldosTable extends Migration
     {
         Schema::table('saldos', function (Blueprint $table) {
             $table->bigInteger('trabajo_id')->unsigned();
+            $table->boolean('cobrado')->default(false);
         });
     }
 
@@ -27,6 +28,7 @@ class AddTrabajoToSaldosTable extends Migration
     {
         Schema::table('saldos', function (Blueprint $table) {
             $table->dropColumn('trabajo_id');
+            $table->dropColumn('cobrado');
         });
     }
 }
