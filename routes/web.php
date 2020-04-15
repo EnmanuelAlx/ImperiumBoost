@@ -58,7 +58,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/chatAnonimos/{anonimo}', 'TrabajoController@chatAnonimo')->name('chat-anonimos');
     Route::get('/chatTrabajadores', 'TrabajoController@chatTrabajadores')->name('chat-trabajadores');
     Route::get('/chatTrabajadores/{trabajador}', 'TrabajoController@chatTrabajador')->name('chat-trabajador');
-    
+
+    Route::get('/history','TrabajoController@history');
     
     Route::post('/messages', 'MessageController@sentMessageAdmin');
     Route::post('/messages-files', 'MessageController@sentFilesAdmin');

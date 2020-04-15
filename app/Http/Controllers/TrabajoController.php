@@ -177,6 +177,23 @@ class TrabajoController extends Controller
         $trabajo->trabajador->save();
         return;
     }
+
+    public function history()
+    {
+        // {{-- {{ $dataTypeContent  }} --}}
+        //         {{-- 0 == por pagar
+        //         1 == esperando por trabajador
+        //         2 == trabajador asignado
+        //         3 == trabajo culminado
+        //         -1 == cancelado --}}
+        $trabajos = Trabajo::where('status', 3)->get();
+        $trabajos_cancelados = Trabajo::where('status', -1)->get();
+        $total_ganado = 0;
+        foreach ($trabajos as $trabajo) {
+            $total_ganado += $trabajo->monto * ($trabajo->porcentaje_trabajador / 100);
+        }
+        return view('/historyWorks', ['trabajos' => $trabajos, "ganancias" => $total_ganado, "trabajos_cancelados" => $trabajos_cancelados]);
+    }
     //Divisiones de plata para abajo, factor 1 
     //Oro factor 1.5
     //Platino 2

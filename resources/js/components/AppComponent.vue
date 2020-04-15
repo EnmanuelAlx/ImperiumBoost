@@ -23,6 +23,7 @@
                     </v-list-item-content>
                 </template>
                 <route :to="{name: 'boost'}" name="Elo Boost" icon="trending_up" :link="true"/>
+                <route :to="{name: 'boost'}" name="TFT Boost" icon="done" :link="true"/>
                 <route :to="{name: 'maestria'}" name="Maestria de campeón" icon="label_important" :link="true"/>
                 <route :to="{name: 'level'}" name="Subir cuenta de nivel" icon="keyboard_arrow_up" :link="true"/>
                 <route :to="{name: 'honor'}" name="Subir Honor" icon="whatshot" :link="true"/>

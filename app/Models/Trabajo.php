@@ -50,4 +50,8 @@ class Trabajo extends Model
     {
         return $this->hasMany(Message::class, 'trabajo_id', 'id');
     }
+
+    public function ganancia(){
+        return $this->monto * ($this->porcentaje_trabajador / 100);
+    }
 }
