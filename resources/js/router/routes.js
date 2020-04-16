@@ -20,6 +20,11 @@ export default new Router({
             component: require('../views/Boost').default,
         },
         {
+            path: '/tft',
+            name: 'tft',
+            component: require('../views/tft').default,
+        },
+        {
             path: '/maestria-campeon',
             name: 'maestria',
             component: require('../views/Maestria').default,

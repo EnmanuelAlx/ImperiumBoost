@@ -159,6 +159,9 @@ class ServicioController extends Controller
             case 7:
                 $status = $this->buyAccount($request->all());
                 break;
+            case 8:
+                $status = $this->TftBoost($request->all());
+                break;
             default:
                 # code...
                 break;
@@ -550,6 +553,50 @@ EOT;
             'user' => Auth::user()->id,
         ]);
         return 200;
+    }
+
+    public function TftBoost($info){
+        $data = $info['info'];
+        try {
+            $cupon = null;
+            if(isset($info['cupon'])){
+                $cupon = $this->verifyCupon($info['cupon']);
+                if(is_null($cupon)){
+                    return 205;
+                }
+            }
+            $tipo_boost = $info['service']['tipo_servicio'];
+            $desde = $data['desde'];
+            $hasta = $data['hasta'];
+            $nombre = $info['name'];
+            $server = $info['server'];
+            $metodo_pago = $info['payment_method'];
+            $nota = <<<EOT
+Tipo de bost: $tipo_boost
+Desde: $desde
+Hasta: $hasta
+
+EOT;
+            $trabajo = Trabajo::create([
+                'nota' => $nota,
+                'cuenta' => $info['name'],
+                'servidor' => $info['server'],
+                'monto' => $info['total'],
+                'servicio_id' => $info['service']['id'],
+                'user_id' => Auth::user()->id,
+                'trabajador_id' => null,
+                'cupon_id' => $cupon,
+                'metodo_id' => $metodo_pago,
+                'nota_cliente' => $info['nota']
+            ]);
+            
+            foreach ($data['ligas'] as $producto) {
+                $trabajo->productos()->attach($producto);
+            }
+            return 200;
+        } catch (\Throwable $th) {
+            return 500;
+        }
     }
 
 }
