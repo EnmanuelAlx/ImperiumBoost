@@ -27,9 +27,9 @@ import axios from 'axios'
             }
         },
         created () {
-            setInterval(() => {
-                this.getChats();
-            }, 3000);
+            // setInterval(() => {
+            //     this.getChats();
+            // }, 3000);
         },
         methods: {
             getChats() {
