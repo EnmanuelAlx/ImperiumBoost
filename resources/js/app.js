@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap.js');
 require('vue2-animate/dist/vue2-animate.min.css')
 
 

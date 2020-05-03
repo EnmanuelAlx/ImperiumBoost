@@ -91,6 +91,8 @@ import axios from "axios";
     },
     methods: {
       login() {
+        let token = document.head.querySelector('meta[name="csrf-token"]');
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
         this.overlay = true;
         axios.post("admin/login",this.user)
         .then(res => {
