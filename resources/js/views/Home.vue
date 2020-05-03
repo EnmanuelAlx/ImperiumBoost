@@ -55,7 +55,7 @@
         </v-layout>
       </v-container>
       <v-container fluid>
-        <public-chat></public-chat>  
+        <!-- <public-chat></public-chat>   -->
       </v-container>
       <v-overlay :value="overlay">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
