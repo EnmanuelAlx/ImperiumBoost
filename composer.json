@@ -15,7 +15,7 @@
         "laravel/tinker": "^1.0",
         "pusher/pusher-php-server": "~3.0",
         "tcg/voyager": "^1.2",
-        "gd": "*"
+        "ext-gd": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
