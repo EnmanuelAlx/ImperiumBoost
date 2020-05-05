@@ -10,6 +10,7 @@
             v-model="search.nombre"
             :color="`${this.$colors.primary}`"
             @change="changeInput"
+            @keyup.enter="getInfo"
             />
         </div>
         <div class="col-3">

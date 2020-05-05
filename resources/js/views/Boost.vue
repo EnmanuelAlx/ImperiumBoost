@@ -314,7 +314,13 @@ import Pago from '../components/Pagos'
                 }
             },
             calculPrecio(service){
-                let precio = parseFloat((service.precio + (this.precio_base*service.porcentaje/100)).toFixed(2))
+                let pre = this.precio_base*service.porcentaje/100;
+                let cio = service.precio + pre
+                console.log('pre: '+pre);
+                console.log('cio: '+cio);
+                let precio = parseFloat((cio).toFixed(2));
+                
+
                 return precio;
             }
         },
