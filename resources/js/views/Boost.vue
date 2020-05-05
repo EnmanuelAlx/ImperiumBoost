@@ -35,7 +35,7 @@
         </v-container>
 
         <v-row >
-            <v-img :src="`${this.$pathImagenes}/imperiumboost.png`" :aspect-ratio="15"  v-if="this.adicionales[0]">
+            <v-img :src="`${this.$pathImagenes}/adicionales.png`" :aspect-ratio="15"  v-if="this.adicionales[0]">
                 <v-container grid-list-xs>
                     <v-row >
                         <v-col>
@@ -84,9 +84,9 @@
             <pago 
             :info="{
                 precios:[
-                    {'label': 'Boost', 'precio': precio_base},
-                    {'label': 'Duo', 'precio': precio_duo},
-                    {'label': 'Champs', 'precio': precio_champ},
+                    {'label': 'Boost', 'precio': parseFloat(precio_base)},
+                    {'label': 'Duo', 'precio': parseFloat(precio_duo)},
+                    {'label': 'Champs', 'precio': parseFloat(precio_champ)},
                 ],
                 ligas: ligas_a_subir,
                 adicionales: adicionalesSelected,

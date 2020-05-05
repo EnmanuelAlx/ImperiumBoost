@@ -25,7 +25,7 @@
                 <v-col align-self="center">
                     <div class="subheading text-center" >
                         <span class="subheading">
-                            Total : {{ Cprecio_total }}$ ({{ $store.state.tasa * Cprecio_total }} {{ $store.state.subfix }})
+                            Total : {{ Cprecio_total }}$ ({{ (parseFloat($store.state.tasa) * Cprecio_total) }} {{ $store.state.subfix }})
                         </span>
                     </div>
                 </v-col>
@@ -77,7 +77,7 @@
                                         Total
                                     </td>
                                     <td class="text-right">
-                                        {{ Cprecio_total }}$ ({{ $store.state.tasa * Cprecio_total}} {{ $store.state.subfix }})
+                                        {{ Cprecio_total }}$ ({{ ($store.state.tasa * Cprecio_total)}} {{ $store.state.subfix }})
                                     </td>
                                 </tr>
                                 <tr v-if="total_descuento">
@@ -179,7 +179,7 @@ import Cupon from "./Cupon"
                 this.info.precios.forEach(element => {
                     this.precioTotal+=element.precio
                 });
-                return this.precioTotal
+                return this.precioTotal.toFixed(2)
             }
         },
         methods: {
