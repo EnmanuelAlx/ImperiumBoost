@@ -318,7 +318,7 @@ import Pago from '../components/Pagos'
                 let cio = service.precio + pre
                 console.log('pre: '+pre);
                 console.log('cio: '+cio);
-                let precio = parseFloat((cio).toFixed(2));
+                let precio = parseFloat((cio)).toFixed(2);
                 
 
                 return precio;
