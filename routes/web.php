@@ -18,7 +18,9 @@ Route::post('/messages-files', 'MessageController@sentFiles');
 Route::get('/messages/trabajador/{id}', 'MessageController@fetchWorkerMessageToAdmin');
 Route::get('/messages/anonimos/{email}', 'MessageController@fetchAnonimusMessageToAdmin');
 Route::post('/message-guest', 'MessageController@guestMessageToAdmin');
-
+Route::get('/test', function () {
+    dd(asset(''));
+});
 
 Route::get('/', 'HomeController@home')->name('home')->middleware("guest");
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

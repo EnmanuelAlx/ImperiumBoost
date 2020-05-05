@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="imagenes" content="{{ asset('imagenes') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="public_path" content="{{ asset('') }}">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ config('app.name') }}" class="app_name">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
 </head>
 <body>
     <div id="app">
