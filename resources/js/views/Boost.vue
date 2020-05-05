@@ -288,8 +288,12 @@ import Pago from '../components/Pagos'
                             });
                             let i_desde = (this.productos.indexOf(found_desde));
                             let i_hasta = (this.productos.indexOf(found_hasta));
+                            console.log('-------------------------------------------');
                             console.log(this.productos[i_desde]);
                             console.log(this.productos[i_hasta]);
+                            console.log('i_hasta '+i_hasta);
+                            console.log('i_desde '+i_desde);
+                            console.log('-------------------------------------------');
                             for (let i = i_desde; i < i_hasta; i++){
                                 console.log(this.productos[i]);
                             
