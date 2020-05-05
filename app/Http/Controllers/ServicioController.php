@@ -200,6 +200,7 @@ EOT;
                 'nota' => $nota,
                 'cuenta' => $info['name'],
                 'servidor' => $info['server'],
+                'status' => 0,
                 'monto' => $info['total'],
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
@@ -254,6 +255,7 @@ EOT;
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
                 'trabajador_id' => null,
+                'status' => 0,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
                 'nota_cliente' => $info['nota']
@@ -302,6 +304,7 @@ EOT;
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
                 'trabajador_id' => null,
+                'status' => 0,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
                 'nota_cliente' => $info['nota']
@@ -348,6 +351,7 @@ EOT;
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
                 'trabajador_id' => null,
+                'status' => 0,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
                 'nota_cliente' => $info['nota']
@@ -395,6 +399,7 @@ EOT;
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
                 'trabajador_id' => null,
+                'status' => 0,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
                 'nota_cliente' => $info['nota']
@@ -439,6 +444,7 @@ EOT;
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
                 'trabajador_id' => null,
+                'status' => 0,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,
                 'nota_cliente' => $info['nota']
@@ -584,6 +590,7 @@ EOT;
                 'monto' => $info['total'],
                 'servicio_id' => $info['service']['id'],
                 'user_id' => Auth::user()->id,
+                'status' => 0,
                 'trabajador_id' => null,
                 'cupon_id' => $cupon,
                 'metodo_id' => $metodo_pago,

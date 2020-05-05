@@ -21,7 +21,7 @@ class CreateTrabajosTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('trabajador_id')->unsigned()->nullable();
             $table->bigInteger('cupon_id')->unsigned()->nullable();
-            $table->integer('status')->nullable()->default(1);
+            $table->integer('status')->nullable()->default(0);
             $table->string('cuenta',100)->nullable();
             $table->string('contraseña_cuenta', 100)->nullable();
             $table->foreign('servicio_id')->references('id')->on('servicios')->onDelete('cascade');
