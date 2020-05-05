@@ -288,7 +288,11 @@ import Pago from '../components/Pagos'
                             });
                             let i_desde = (this.productos.indexOf(found_desde));
                             let i_hasta = (this.productos.indexOf(found_hasta));
+                            console.log(this.productos[i_desde]);
+                            console.log(this.productos[i_hasta]);
                             for (let i = i_desde; i < i_hasta; i++){
+                                console.log(this.productos[i]);
+                            
                                 this.precio_base += this.productos[i].precio
                                 this.ligas_a_subir.push(this.productos[i].id)
                             }

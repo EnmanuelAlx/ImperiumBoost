@@ -73,7 +73,7 @@ class RiotController extends Controller
             }
             switch ($value['tier']) {
                 case 'IRON':
-                    $img = 'hierro'.$value['rank'].'.png';
+                    $img = strtolower('hierro'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Hierro ".$value['rank'];
@@ -81,7 +81,7 @@ class RiotController extends Controller
                     break;
                 
                 case 'BRONZE':
-                    $img = 'bronce'.$value['rank'].'.png';
+                    $img = strtolower('bronce'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Bronce ".$value['rank'];
@@ -89,7 +89,7 @@ class RiotController extends Controller
                     break;
 
                 case 'SILVER':
-                    $img = 'plata'.$value['rank'].'.png';
+                    $img = strtolower('plata'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Plata ".$value['rank'];
@@ -97,7 +97,7 @@ class RiotController extends Controller
                     break;
 
                 case 'GOLD':
-                    $img = 'oro'.$value['rank'].'.png';
+                    $img = strtolower('oro'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Oro ".$value['rank'];
@@ -105,7 +105,7 @@ class RiotController extends Controller
                     break;
                 
                 case 'PLATINUM':
-                    $img = 'platino'.$value['rank'].'.png';
+                    $img = strtolower('platino'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Platino ".$value['rank'];
@@ -113,7 +113,7 @@ class RiotController extends Controller
                     break;
 
                 case 'DIAMOND':
-                    $img = 'diamante'.$value['rank'].'.png';
+                    $img = strtolower('diamante'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Diamante ".$value['rank']; 
@@ -121,7 +121,7 @@ class RiotController extends Controller
                     break;
 
                 case 'MASTER':
-                    $img = 'maestro'.$value['rank'].'.png';
+                    $img = strtolower('maestro'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Maestro "; 
@@ -130,7 +130,7 @@ class RiotController extends Controller
                     break;
 
                 case 'GRANDMASTER':
-                    $img = 'granmaestro'.$value['rank'].'.png';
+                    $img = strtolower('granmaestro'.$value['rank'].'.png');
                     $imagen_league = asset("imagenes/leagues/$img");
                     $data[$key]['image'] = $imagen_league;
                     $data[$key]['tier_rank_translate'] = "Gran Maestro ";
