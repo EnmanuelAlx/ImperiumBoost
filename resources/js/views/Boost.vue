@@ -35,7 +35,7 @@
         </v-container>
 
         <v-row >
-            <v-img :src="`${this.$pathImagenes}/Imperiumboost.png`" :aspect-ratio="15"  v-if="this.adicionales[0]">
+            <v-img :src="`${this.$pathImagenes}/imperiumboost.png`" :aspect-ratio="15"  v-if="this.adicionales[0]">
                 <v-container grid-list-xs>
                     <v-row >
                         <v-col>
