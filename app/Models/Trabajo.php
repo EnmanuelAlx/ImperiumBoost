@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Trabajo extends Model
 {
     protected $fillable = [
-       'nota_cancelacion', 'nota', 'monto', 'servicio_id', 'user_id', 'trabajador_id', 'cupon_id', 'metodo_id', 'cuenta', 'servidor', 'nota_cliente'
+       'nota_cancelacion', 'nota', 'monto', 'servicio_id', 'user_id', 'trabajador_id', 'cupon_id', 'metodo_id', 'cuenta', 'servidor', 'nota_cliente', 'status'
     ];
 
     public function usuario()
