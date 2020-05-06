@@ -25,10 +25,10 @@
             <pago
                 :info="{
                     precios:[
-                        {'label': 'Honor', 'precio': precio},                    
+                        {'label': 'Honor', 'precio': parseFloat(precio)},                    
                     ],
                     productos: productosSeleccionados,
-                    precio_total: precio,
+                    precio_total: parseFloat(precio),
                     desde:from.nombre,
                     hasta: to.nombre,
                     servicio: {id: 4, tipo_servicio: 'Subir honor'}
