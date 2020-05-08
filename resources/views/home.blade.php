@@ -9,7 +9,7 @@
         <title>{{ env('APP_NAME') }}</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        {{-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet"> --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="sonidos" content="{{ asset('sonido') }}" />
 
