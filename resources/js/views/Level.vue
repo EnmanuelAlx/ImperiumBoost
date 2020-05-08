@@ -4,43 +4,49 @@
             <search-summoner URL="getSummoner" v-on:getData="getData"/>
         </v-container>
 
-        <v-container grid-list-xs>
+        <v-container >
             <v-row>
                 <v-col>
-                    <v-img :src="from_imagen" aspect-ratio="1">
-                        <v-col cols="8" align-self="center">
-                            <v-text-field style="margin-top: 105px; margin-left: 100px"
-                                v-model="from"
-                                outlined
-                                disabled
-                                mask="####"
-                                :color="this.$colors.primary"
-                            />
-                        </v-col>
-                    </v-img>
+                    <div>
+                        <v-img :src="from_imagen" >
+                        </v-img>
+                    </div>
+                    <div style="padding-left: 100px; padding-right: 100px;">
+                        <v-text-field
+                            v-model="from"
+                            outlined
+                            disabled
+                            mask="####"
+                            :color="this.$colors.primary"
+                        />
+                    </div>
                 </v-col>
-                <v-col/>
                 
                 <v-col>
-                    <v-img :src="to_imagen" aspect-ratio="1">
-                        <v-col cols="10" align-self="center">
-                            <v-text-field style="margin-top: 105px; margin-left: 75px"
-                                prepend-icon="remove"
-                                append-outer-icon="add"
-                                v-model="to"
-                                outlined
-                                mask="####"
-                                :color="this.$colors.primary"
-                                :disabled="from==0"
-                                @click:prepend="to--"
-                                @click:append-outer="to++"
-                            />
-                        </v-col>
-                    </v-img>
+                    <div>
+                        <v-img :src="to_imagen">
+                        </v-img> 
+                    </div>
+                        
+                    <div style="padding-left: 80px; padding-right: 80px;">
+                         <v-text-field
+                            prepend-icon="remove"
+                            append-outer-icon="add"
+                            v-model="to"
+                            outlined
+                            mask="####"
+                            :color="this.$colors.primary"
+                            :disabled="from==0"
+                            @click:prepend="to--"
+                            @click:append-outer="to++"
+                        />
+                    </div>
+                    
                 </v-col>
             </v-row>
         </v-container>
-        <v-container grid-list-xs>
+        
+        <v-container >
             <pago
                 :info="{
                     precios:[

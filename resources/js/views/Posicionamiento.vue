@@ -83,6 +83,8 @@ import Pago from '../components/Pagos'
         watch: {
             cantidad(old, new_value) {
                 this.calcularPrecio();
+                console.log("---------------------------------");
+                console.log(old, new_value);
             }
         },
         methods: {
@@ -103,6 +105,7 @@ import Pago from '../components/Pagos'
                 this.precio = 0;
                 this.precio = this.cantidad * this.precio_base
                 this.productos = [];
+                console.log('calculando precios');
                 for (let index = 0; index < this.cantidad; index++) {
                     this.productos.push(this.producto.id);
                 }
