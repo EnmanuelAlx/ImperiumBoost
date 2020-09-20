@@ -27,6 +27,7 @@ Vue.component('PublicChat', require('./components/PublicChat.vue').default);
 Vue.component('ListaChats', require('./components/ListaChats.vue').default);
 Vue.component('chatAnonimoAdmin', require('./components/ChatAnonimosAdmin.vue').default);
 let public_path = document.head.querySelector('meta[name="public_path"]');
+
 Vue.prototype.$pathImagenes = `${public_path.content}imagenes`;
 Vue.prototype.$colors = {
     primary: '#9E2FB9',

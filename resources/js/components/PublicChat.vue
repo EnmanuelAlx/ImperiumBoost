@@ -107,7 +107,7 @@
 
 <script>
     export default {
-        name: 'Public chat',
+        name: 'Public_chat',
         data() {
             return {
                 fav: true,

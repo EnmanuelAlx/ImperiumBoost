@@ -7,6 +7,7 @@
     <title>Chats de trabajo</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="public_path" content="{{ asset('') }}">
 
     {{-- <link rel="stylesheet" href="{{ asset('css/chat.css') }}"> --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css" rel="stylesheet">
