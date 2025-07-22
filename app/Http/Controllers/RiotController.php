@@ -9,7 +9,7 @@ use function GuzzleHttp\json_decode;
 
 class RiotController extends Controller
 {
-    CONST API_KEY = 'RGAPI-abb0a391-8aed-4697-9133-d492099ff2d4';
+    CONST API_KEY = "";
 
     public function getSummoner(Request $request){
         $server = $request->input('servidor');
